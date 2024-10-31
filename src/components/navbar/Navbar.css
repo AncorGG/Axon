@@ -1,0 +1,29 @@
+.nav-container {
+  margin: 11px auto;
+  width: 100vw;
+}
+
+.nav-icon-container {
+  width: 70vw;
+  margin: auto;
+  padding: 8px 30px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: var(--dark-green);
+  border-radius: 40px;
+}
+
+.nav-icon {
+  color: #7e9336;
+}
+
+.nav-icon-selected {
+  padding: 13px;
+  background-color: var(--off-white);
+  border-radius: 50px;
+  color: #48612c;
+}
