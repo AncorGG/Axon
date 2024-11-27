@@ -11,7 +11,7 @@ import "./ExerciseTest.css";
 function ExerciseTest() {
   const [mode, setMode] = useState<"read" | "write" | "review">("read");
 
-  const { id } = useParams();
+  const { id_exercise } = useParams();
   const nav = useNavigate();
   const [exercise, setExercise] = useState<exercise | null>(null);
 
@@ -21,17 +21,17 @@ function ExerciseTest() {
         const response = await fetch(`/models/ExerciseList.json`);
         const exercises: exercise[] = await response.json();
         const selectedExercise = exercises.find(
-          (ex) => ex.id === parseInt(id!)
+          (ex) => ex.id === parseInt(id_exercise!)
         );
         setExercise(selectedExercise || null);
       } catch (error) {
         console.error("Error fetching exercise:", error);
       }
     };
-    if (id) {
+    if (id_exercise) {
       fetchExercise();
     }
-  }, [id]);
+  }, [id_exercise]);
 
   const handleContinue = () => {
     if (mode === "read") {

@@ -1,5 +1,5 @@
 .card-container {
-  width: 80vw;
+  width: 80%;
   height: 212;
   margin: 11px auto;
 
@@ -30,8 +30,3 @@
   color: var(--text-color);
 }
 
-@media (min-width: 1200px) {
-  .card-container {
-    width: 30vw;
-  }
-}

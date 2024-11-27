@@ -1,0 +1,23 @@
+[
+  {
+    "id_routine": 1,
+    "name": "Morning Routine",
+    "description": "Fast Routine for the morning.",
+    "creation_date": "2024-12-08 00:00:00",
+    "id_user": 1
+  },
+  {
+    "id_routine": 2,
+    "name": "Afternoon Routine",
+    "description": "Fast Routine for short sessions of work in the afternoon.",
+    "creation_date": "2024-07-15 00:00:00",
+    "id_user": 1
+  },
+  {
+    "id_routine": 3,
+    "name": "Study",
+    "description": "Long Routine for long sessions of work at non-bussy days.",
+    "creation_date": "2024-02-21 00:00:00",
+    "id_user": 1
+  }
+]

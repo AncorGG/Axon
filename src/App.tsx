@@ -9,6 +9,7 @@ import Profile from "./pages/User/Profile";
 import ProfileLogin from "./pages/User/ProfileLogin";
 import ProfileRegister from "./pages/User/ProfileRegister";
 import ExerciseTest from "./pages/Exercise/ExerciseTest";
+import { Routines } from "./pages/Routines/Routines";
 
 function App() {
   return (
@@ -17,7 +18,8 @@ function App() {
         <Route path="*" element={<HomePage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/exercise" element={<ExerciseSelector />} />
-        <Route path="/exercise/test/:id" element={<ExerciseTest />} />
+        <Route path="/exercise/test/:id_exercise" element={<ExerciseTest />} />
+        <Route path="/exercise/routines/:id_routine" element={<Routines />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/milestones" element={<Milestones />} />
         <Route path="/milestones/goals" element={<Badges />} />
