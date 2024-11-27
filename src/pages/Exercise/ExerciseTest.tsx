@@ -5,25 +5,30 @@ import TestButtons from "../../components/navigation/test_buttons/TestButtons";
 import DigitBash from "../../components/displays/digit-bash/DigitBash";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { exercise } from "../../../public/models/ExerciseListType";
+import { Exercise } from "../../../public/models/ExerciseListType";
 import "./ExerciseTest.css";
+import { ExerciseService } from "../../services/exercise.service";
 
 function ExerciseTest() {
   const [mode, setMode] = useState<"read" | "write" | "review">("read");
-
   const { id_exercise } = useParams();
+  const [exercise, setExercise] = useState<Exercise | null>(null);
   const nav = useNavigate();
-  const [exercise, setExercise] = useState<exercise | null>(null);
 
   useEffect(() => {
     const fetchExercise = async () => {
       try {
-        const response = await fetch(`/models/ExerciseList.json`);
-        const exercises: exercise[] = await response.json();
-        const selectedExercise = exercises.find(
-          (ex) => ex.id === parseInt(id_exercise!)
-        );
-        setExercise(selectedExercise || null);
+        const id = id_exercise ? parseInt(id_exercise) : NaN;
+        if (isNaN(id)) {
+          console.error("Invalid exercise ID:", id_exercise);
+          return;
+        }
+        const data = await ExerciseService.getExerciseById(id);
+        if (data) {
+          setExercise(data);
+        } else {
+          console.error("Exercise not found.");
+        }
       } catch (error) {
         console.error("Error fetching exercise:", error);
       }
@@ -71,13 +76,13 @@ function ExerciseTest() {
       <DigitBash
         type={mode}
         text={getText()}
-        digitLength={exercise.digitLenght || 8}
-        digitSpeed={exercise.digitSpeed || 0}
+        digitLength={exercise.difficulty || 6}
+        digitSpeed={exercise.speed || 3}
         onReadComplete={handleContinue}
       />
       <TestButtons
         onContinue={handleContinue}
-        repeatUrl={`/exercise/test/${exercise.id}`}
+        repeatUrl={`/exercise/test/${exercise.id_exercise}`}
         isActive={mode !== "read"}
       />
     </div>

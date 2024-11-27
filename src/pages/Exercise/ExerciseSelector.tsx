@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Card from "../../components/displays/card/Card";
 import Navbar from "../../components/navigation/navbar/Navbar";
 import { useNavigate } from "react-router-dom";
-import { exercise } from "../../../public/models/ExerciseListType";
+import { Exercise } from "../../../public/models/ExerciseListType";
 import { Routine } from "../../../public/models/RoutineListType";
 import HorizontalNavbar from "../../components/navigation/navbar/HorizontalNavbar";
 import ExtraDisplay from "../../components/navigation/extra-display/ExtraDisplay";
@@ -10,9 +10,10 @@ import Return from "../../components/navigation/return/Return";
 import { BsPencil, BsPlus, BsTrash } from "react-icons/bs";
 import "./ExerciseSelector.css";
 import { RoutineService } from "../../services/routine.service";
+import { ExerciseService } from "../../services/exercise.service";
 
 function ExerciseSelector() {
-  const [exercises, setExercises] = useState<exercise[]>([]);
+  const [exercises, setExercises] = useState<Exercise[]>([]);
   const [routines, setRoutines] = useState<Routine[]>([]);
   const navigate = useNavigate();
 
@@ -23,9 +24,7 @@ function ExerciseSelector() {
 
   const fetchExercises = async () => {
     try {
-      const response = await fetch("/models/ExerciseList.json");
-      const text = await response.text();
-      const data = JSON.parse(text);
+      const data = await ExerciseService.getExercises();
       setExercises(data);
     } catch (error) {
       console.error("Error fetching exercises:", error);
@@ -41,15 +40,17 @@ function ExerciseSelector() {
     }
   };
 
-  const handleCardClick = (exercise: exercise) => {
-    navigate(`/exercise/test/${exercise.id}`, { state: { exercise } });
+  const handleCardClick = (exercise: Exercise) => {
+    navigate(`/exercise/test/${exercise.id_exercise}`, { state: { exercise } });
   };
 
   const handleDeleteRoutine = async (id: number) => {
     try {
       await RoutineService.deleteRoutine(id);
       fetchRoutines();
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error deleting routine:", error);
+    }
   };
 
   return (
@@ -86,11 +87,10 @@ function ExerciseSelector() {
                   </div>
                 </div>
               ))}
-              <div className="exercise-routine">
+              <div className="exercise-routine" onClick={() => navigate(`/exercise/routines/new`)}>
                 <div className="exercise-routine-add">
                   <BsPlus
                     size={40}
-                    onClick={() => navigate(`/exercise/routines/new`)}
                   />
                 </div>
               </div>
@@ -98,10 +98,10 @@ function ExerciseSelector() {
           </div>
           {exercises.map((exercise) => (
             <Card
-              key={exercise.id}
+              key={exercise.id_exercise}
               image="exercise.png"
               alt={`Exercise ${exercise.difficulty} Image`}
-              text={`${exercise.name} - ${exercise.difficulty}`}
+              text={`${exercise.exercise_name}`}
               onClick={() => handleCardClick(exercise)}
             />
           ))}

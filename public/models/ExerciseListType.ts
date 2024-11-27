@@ -1,8 +1,7 @@
-export type exercise = {
-  id: number;
-  name: string;
-  difficulty: string;
-  speed: string;
-  digitLenght: number;
-  digitSpeed: number;
+export type Exercise = {
+  id_exercise: number;
+  exercise_name: string;
+  difficulty: number;
+  speed: number;
+  experience: number;
 };
