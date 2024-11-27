@@ -23,7 +23,7 @@ function HorizontalNavbar() {
               nav("/home");
             }}
           >
-            <BsController size={40} color="#7e9336" />
+            <BsHouseDoor size={40} color="#7e9336" />
             <p className="horizontal-nav-text">Home</p>
           </div>
           <div
@@ -32,7 +32,7 @@ function HorizontalNavbar() {
               nav("/exercise");
             }}
           >
-            <BsTrophy size={40} color="#7e9336" />
+            <BsController size={40} color="#7e9336" />
             <p className="horizontal-nav-text">Exercises</p>
           </div>
           <div
@@ -41,7 +41,7 @@ function HorizontalNavbar() {
               nav("/milestones");
             }}
           >
-            <BsHouseDoor size={40} color="#7e9336" />
+            <BsTrophy size={40} color="#7e9336" />
             <p className="horizontal-nav-text">Milestones</p>
           </div>
           <div
@@ -50,7 +50,7 @@ function HorizontalNavbar() {
               nav("/user");
             }}
           >
-            <BsGear size={40} color="#7e9336" />
+            <BsPerson size={40} color="#7e9336" />
             <p className="horizontal-nav-text">Profile</p>
           </div>
           <div
@@ -59,7 +59,7 @@ function HorizontalNavbar() {
               nav("/settings");
             }}
           >
-            <BsPerson size={40} color="#7e9336" />
+            <BsGear size={40} color="#7e9336" />
             <p className="horizontal-nav-text">Settings</p>
           </div>
         </div>

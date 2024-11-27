@@ -12,8 +12,9 @@ import Return from "../../components/navigation/return/Return";
 import "./Routines.css";
 import { Select } from "antd";
 import { useEffect, useState } from "react";
-import { routine } from "../../../public/models/RoutineListType";
-import { useParams } from "react-router-dom";
+import { Routine } from "../../../public/models/RoutineListType";
+import { useNavigate, useParams } from "react-router-dom";
+import { RoutineService } from "../../services/routine.service";
 
 interface RoutineContentProps {
   title: string;
@@ -21,109 +22,153 @@ interface RoutineContentProps {
   isNew: boolean;
 }
 
-const RoutineContent = ({ title: initialTitle, description: initialDescription, isNew }: RoutineContentProps) => {
-
+const RoutineContent = ({
+  title: initialTitle,
+  description: initialDescription,
+  isNew,
+}: RoutineContentProps) => {
   const [title, setTitle] = useState(initialTitle);
   const [description, setDescription] = useState(initialDescription);
+  const navigate = useNavigate();
+  const { id_routine } = useParams();
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    console.log("Saved title:", title);
-    console.log("Saved description:", description);
+
+    if (isNew) {
+      const newRoutine = {
+        name: title,
+        description: description,
+      };
+      console.log(newRoutine);
+
+      try {
+        const createRoutine = await RoutineService.addRoutine(newRoutine);
+        console.log(createRoutine);
+      } catch (error) {
+        console.error("Error creating new routine:", error);
+      }
+    } else {
+      if (id_routine) {
+        const id = Number(id_routine);
+        const updatedRoutine = {
+          id_routine: Number(id),
+          name: title,
+          description: description,
+          id_user: 1,
+        };
+        try {
+          const updatedData = await RoutineService.updateRoutine(
+            id,
+            updatedRoutine
+          );
+          console.log("Updated routine:", updatedData);
+        } catch (error) {
+          console.error("Error updating routine:", error);
+        }
+      }
+    }
+    navigate("/exercise");
   };
 
   return (
-  <div className="main-container">
-    <HorizontalNavbar />
-    <div className="scrolleable-container">
-      <Return />
-      <div className="routine-container">
-        <div className="routine-info-container">
-          <form onSubmit={handleSubmit}>
-            <div className="routine-info-header">
-              {" "}
-              <input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className="routine-info-title"
-                placeholder="Enter routine title"
-              />
-              <BsFloppy size={26} color="#48612c" className="routine-icon" onClick={handleSubmit}/>
-            </div>
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="routine-info-text"
-              placeholder="Enter routine description"
-            />
-          </form>
-        </div>
-        <div className="routine-list-container">
-          <p className="routine-list-title">Exercises (1)</p>
-          <div className="routine-card">
-            <img
-              src="/images/brain.jpg"
-              alt="Exercise icon"
-              className="routine-card-image"
-            />
-            <div className="routine-card-info">
-              <div className="routine-card-header">
-                <p className="routine-card-text">Digit Bash</p>
-                <BsTrash size={24} color="#ff0e0e" className="routine-icon" />
+    <div className="main-container">
+      <HorizontalNavbar />
+      <div className="scrolleable-container">
+        <Return />
+        <div className="routine-container">
+          <div className="routine-info-container">
+            <form onSubmit={handleSubmit}>
+              <div className="routine-info-header">
+                {" "}
+                <input
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="routine-info-title"
+                  placeholder="Enter routine title"
+                />
+                <BsFloppy
+                  size={26}
+                  color="#48612c"
+                  className="routine-icon"
+                  onClick={handleSubmit}
+                />
               </div>
-              <Select
-                defaultValue="Easy"
-                style={{ width: 120 }}
-                // onChange={handleChange}
-                options={[
-                  { value: "1", label: "Easy" },
-                  { value: "2", label: "Medium" },
-                  { value: "3", label: "Hard" },
-                  { value: "4", label: "Extreme" },
-                ]}
+              <textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="routine-info-text"
+                placeholder="Enter routine description"
               />
-            </div>
-            <div className="routine-card-selectors">
-              <BsChevronUp className="routine-icon" />
-              <BsChevronDown className="routine-icon" />
-            </div>
+            </form>
           </div>
-          <div className="routine-add-card">
-            <BsPlus size={45} className="routine-plus-icon" />
+          <div className="routine-list-container">
+            <p className="routine-list-title">Exercises (1)</p>
+            <div className="routine-card">
+              <img
+                src="/images/brain.jpg"
+                alt="Exercise icon"
+                className="routine-card-image"
+              />
+              <div className="routine-card-info">
+                <div className="routine-card-header">
+                  <p className="routine-card-text">Digit Bash</p>
+                  <BsTrash size={24} color="#ff0e0e" className="routine-icon" />
+                </div>
+                <Select
+                  defaultValue="Easy"
+                  style={{ width: 120 }}
+                  // onChange={handleChange}
+                  options={[
+                    { value: "1", label: "Easy" },
+                    { value: "2", label: "Medium" },
+                    { value: "3", label: "Hard" },
+                    { value: "4", label: "Extreme" },
+                  ]}
+                />
+              </div>
+              <div className="routine-card-selectors">
+                <BsChevronUp className="routine-icon" />
+                <BsChevronDown className="routine-icon" />
+              </div>
+            </div>
+            <div className="routine-add-card">
+              <BsPlus size={45} className="routine-plus-icon" />
+            </div>
           </div>
         </div>
       </div>
+      <ExtraDisplay />
+      <Navbar />
     </div>
-    <ExtraDisplay />
-    <Navbar />
-  </div>
   );
 };
 
-
 export function Routines() {
   const { id_routine } = useParams();
-  const [routine, setRoutine] = useState<routine | null>(null);
+  const [routine, setRoutine] = useState<Routine | null>(null);
   const [isCreatingNew, setIsCreatingNew] = useState(false);
 
   useEffect(() => {
     const fetchRoutine = async () => {
-      try {
-        const response = await fetch(`/models/RoutineList.json`);
-        const data = await response.json();
+      if (id_routine === "new") {
+        setIsCreatingNew(true);
+        setRoutine(null);
+        return;
+      }
 
-        const matchedRoutine = data.find(
-          (r: routine) => r.id_routine === Number(id_routine)
-        );
-        if (id_routine && matchedRoutine) {
-          setRoutine(matchedRoutine);
-        } else {
-          setIsCreatingNew(true);
-          setRoutine(null);
+      const id = id_routine ? Number(id_routine) : null;
+
+      if (id !== null) {
+        try {
+          const data = await RoutineService.getRoutineById(id);
+          setRoutine(data);
+        } catch (error) {
+          console.error(`Error fetching routine for ID ${id_routine}:`, error);
         }
-      } catch (error) {
-        console.error(`Error fetching routine for ID ${id_routine}:`, error);
+      } else {
+        console.error("Invalid routine ID");
       }
     };
 
