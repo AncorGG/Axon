@@ -1,0 +1,24 @@
+.milestone-text {
+  margin: 0;
+  font-size: 22px;
+}
+
+.-b {
+  font-weight: 500;
+}
+
+.milestone-goal-container {
+  width: 100%;
+  margin-top: 50px;
+}
+
+.goals-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.goal-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

@@ -1,0 +1,23 @@
+.return-container {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin-left: 4vw;
+}
+
+.return-text {
+  font-size: 22px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.return-icon {
+  cursor: pointer;
+}
+
+
+@media (min-width: 1200px) {
+  .return-container {
+    margin-left: 0;
+  }
+}

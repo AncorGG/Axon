@@ -1,0 +1,73 @@
+.form-checkbox {
+  width: 90%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.form-check-text {
+  font-size: 16px;
+
+  color: var(--default-gray);
+  transition: color 0.3s ease;
+}
+
+.form-checkbox input[type="checkbox"]:checked + .form-check-text {
+  color: var(--light-green);
+}
+
+.form-checkbox input[type="checkbox"] {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--light-green);
+  background-color: transparent;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-right: 8px;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+.form-checkbox input[type="checkbox"]:checked {
+  background-color: var(--light-green);
+  border-color: var(--light-green);
+}
+
+.form-checkbox input[type="checkbox"]:checked::after {
+  content: "✓";
+  color: var(--pure-white);
+  font-size: 12px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.form-button-container-reg {
+  margin: 1em;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.form-button-reg {
+  padding: 12px;
+  width: 85%;
+  font-weight: 400;
+}
+
+.register-btn {
+  color: var(--pure-white);
+  background-color: var(--brown);
+}
+
+.form-bottom-container {
+  width: 90%;
+  margin-left: 1em;
+  display: flex;
+  align-items: center;
+}
+
+.form-bottom-text-reg {
+}

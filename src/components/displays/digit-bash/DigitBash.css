@@ -1,0 +1,128 @@
+.digitb-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.digitb-digit-container {
+  width: 220px;
+  min-height: 200px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--pure-white);
+  filter: drop-shadow(0 4px 4px rgb(0, 0, 0, 0.1));
+  box-shadow: inset 0 0 0 1px var(--light-gray);
+  border-radius: 8px;
+}
+
+.digitb-digit {
+  font-size: 80px;
+  font-weight: 600;
+  color: black;
+  margin: 0;
+}
+
+.digitb-progress-container {
+  width: 85vw;
+  max-width: 600px;
+  margin: 1em auto;
+}
+
+.digitb-text-container {
+  width: 85vw;
+  max-width: 600px;
+  padding: 10px;
+  margin: 5vw 0;
+
+  display: flex;
+  justify-content: center;
+
+  border: 1px solid var(--brown);
+  border-radius: 15px;
+}
+
+.digitb-text {
+  margin: 0;
+  color: var(--brown);
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.digitb-current-digit {
+  width: 30%;
+  margin: 5px 0;
+
+  border: none;
+  outline: none;
+  font-weight: 600;
+  color: black;
+
+  font-family: "Montserrat", sans-serif;
+  text-align: center;
+  font-size: 80px;
+}
+
+.digitb-write-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.digitb-digit-chain {
+  margin: 0;
+  padding: 0 5px;
+  font-size: 22px;
+  letter-spacing: 6px;
+
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+.digitb-review-container {
+  width: 100%;
+  max-width: 600px;
+  margin-top: 3em;
+  display: flex;
+  justify-content: space-around;
+}
+
+.review-container {
+  width: 35vw;
+  max-width: 150px;
+  height: 55px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: solid 3px;
+  border-radius: 10px;
+}
+
+.digitb-review-text {
+  margin: 5px;
+  width: fit-content;
+  font-weight: 600;
+}
+
+.digitb-accuracy P {
+  color: var(--light-green);
+}
+
+.digitb-exp p {
+  color: var(--light-brown);
+}
+
+.digitb-accuracy {
+  border-color: var(--light-green);
+}
+
+.digitb-exp {
+  border-color: var(--light-brown);
+}

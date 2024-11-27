@@ -1,0 +1,77 @@
+.profile-image-container {
+  position: relative;
+  width: 90vw;
+  height: 175px;
+  max-width: 600px;
+
+  background-image: url("/public/images/user-profile-photo.jpg");
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  overflow: hidden;
+
+  border: 2px solid var(--default-gray);
+}
+
+.profile-icon-contanier {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 50px;
+  height: 50px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+  border-radius: 8px;
+  background-color: red;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-info {
+  width: 90vw;
+  max-width: 600px;
+
+  margin-bottom: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.profile-title {
+  margin: 0;
+  font-size: 28px;
+}
+
+.profile-email {
+  margin: 0;
+  font-size: 18px;
+  text-decoration: underline;
+}
+
+.exp-secondary-container {
+  width: 90vw;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.profile-secondary-container .profile-title {
+  margin: 10px 0;
+}
+
+@media (min-width: 1200px) {
+  .profile-image-container, .profile-info, .profile-secondary-container{
+    width: 30vw;
+  }
+
+}

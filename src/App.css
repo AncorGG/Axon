@@ -1,0 +1,16 @@
+body {
+  font-family: "Montserrat", sans-serif;
+  background-color: #f1f0f9;
+}
+
+.ant-select,
+.ant-select-selector,
+.ant-select-item,
+.ant-select-item-option {
+  font-family: "Montserrat", sans-serif !important;
+}
+
+#root {
+  text-align: center;
+  background-color: #f1f0f9;
+}

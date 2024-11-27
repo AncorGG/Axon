@@ -1,0 +1,11 @@
+.close-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+
+.close-icon {
+  margin: 15px 5vw;
+  color: var(--warning-red);
+}

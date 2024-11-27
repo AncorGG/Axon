@@ -1,0 +1,17 @@
+.horizontal-display-container {
+  width: 100%;
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  .horizontal-display-container {
+    width: 30%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+
+    border-left: 3px solid var(--light-gray);
+  }
+}

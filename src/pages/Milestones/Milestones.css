@@ -1,0 +1,16 @@
+.scrolleable-container {
+  width: 100vw;
+  height: 80vh;
+
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+@media (min-width: 1200px) {
+  .scrolleable-container {
+    padding: 0 5vw;
+    width: 30vw;
+    height: 100vh;
+  }
+}

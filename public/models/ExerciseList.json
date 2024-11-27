@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "name": "Digit Bash",
+    "difficulty": "Easy",
+    "speed": "Slow",
+    "digitLenght": 4,
+    "digitSpeed": 4
+  },
+  {
+    "id": 2,
+    "name": "Digit Bash",
+    "difficulty": "Medium",
+    "speed": "Normal",
+    "digitLenght": 6,
+    "digitSpeed": 3
+  },
+  {
+    "id": 3,
+    "name": "Digit Bash",
+    "difficulty": "Hard",
+    "speed": "Fast",
+    "digitLenght": 8,
+    "digitSpeed": 2
+  },
+  {
+    "id": 4,
+    "name": "Digit Bash",
+    "difficulty": "Extreme",
+    "speed": "Speedy",
+    "digitLenght": 10,
+    "digitSpeed": 1
+  }
+]
