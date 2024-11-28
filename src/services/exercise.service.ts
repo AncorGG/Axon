@@ -7,7 +7,6 @@ export const ExerciseService = {
   getExercises: async () => {
     try {
       const response = await axios.get<Exercise[]>(endPoint);
-      console.log(response.data);
       return response.data;
     } catch (error) {
       throw error;
@@ -22,5 +21,4 @@ export const ExerciseService = {
       throw error;
     }
   },
-
 };

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { BsBullseye, BsLightningCharge } from "react-icons/bs";
 import { useEffect } from "react";
 import "./DigitBash.css";
-import Timer from "../timer/Timer";
+import Timer from "../../displays/timer/Timer";
 
 type DigitBashProps = {
   type: string;
@@ -70,9 +70,7 @@ function DigitBash(props: DigitBashProps) {
       setCurrentNumber(newValue);
       setInputText((prev) => {
         const updatedText = prev + newValue;
-        if (updatedText.length === randomCode.length) {
-          calculateAccuracy(updatedText);
-        }
+        calculateAccuracy(updatedText);
         return updatedText;
       });
     }
@@ -113,7 +111,7 @@ function DigitBash(props: DigitBashProps) {
 
       result.push(
         <span key={i} style={{ color: isSame ? "green" : "red" }}>
-          {inputText[i] || "_"}
+          {inputText[i] || "?"}
         </span>
       );
     }
@@ -152,8 +150,10 @@ function DigitBash(props: DigitBashProps) {
               value={currentNumber}
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
-              placeholder="?"
+              placeholder=""
+              autoFocus
             />
+            {currentNumber === "" && <span className="digitb-cursor">|</span>}
             <p className="digitb-digit-chain">{inputText}</p>
           </div>
         );

@@ -2,7 +2,7 @@ import Navbar from "../../components/navigation/navbar/Navbar";
 import Header from "../../components/displays/header/Header";
 import Close from "../../components/navigation/close/Close";
 import TestButtons from "../../components/navigation/test_buttons/TestButtons";
-import DigitBash from "../../components/displays/digit-bash/DigitBash";
+import DigitBash from "../../components/exercises/digit-bash/DigitBash";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Exercise } from "../../../public/models/ExerciseListType";
@@ -44,7 +44,7 @@ function ExerciseTest() {
     } else if (mode === "write") {
       setMode("review");
     } else if (mode === "review") {
-      nav("/home");
+      nav("/exercise");
     }
   };
 
@@ -53,7 +53,7 @@ function ExerciseTest() {
       case "read":
         return "Remember the following sequence of numbers";
       case "write":
-        return "Write down the sequence of numbers in **reverse order**";
+        return "Write down the sequence of numbers in the **shown order**";
       default:
         return "";
     }

@@ -5,3 +5,8 @@ export type Exercise = {
   speed: number;
   experience: number;
 };
+
+export type ExerciseResponse = {
+  exercise: Exercise;
+  sequenceOrder: number;
+};

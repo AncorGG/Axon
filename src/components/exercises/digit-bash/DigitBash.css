@@ -26,6 +26,27 @@
   margin: 0;
 }
 
+.digitb-cursor {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 50px;
+  color: var(--light-gray);
+  animation: blink 1s linear infinite;
+  pointer-events: none; /* La pleca no interfiere con el clic */
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
 .digitb-progress-container {
   width: 85vw;
   max-width: 600px;

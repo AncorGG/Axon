@@ -64,7 +64,9 @@ function ExerciseSelector() {
             <div className="exercise-routine-list">
               {routines.map((routine) => (
                 <div key={routine.id_routine} className="exercise-routine">
-                  <p className="exercise-routine-text">{routine.name}</p>
+                  <p className="exercise-routine-text">
+                    {routine.routine_name}
+                  </p>
                   <div className="exercise-routine-icons">
                     <BsPencil
                       size={20}
@@ -87,11 +89,12 @@ function ExerciseSelector() {
                   </div>
                 </div>
               ))}
-              <div className="exercise-routine" onClick={() => navigate(`/exercise/routines/new`)}>
+              <div
+                className="exercise-routine"
+                onClick={() => navigate(`/exercise/routines/new`)}
+              >
                 <div className="exercise-routine-add">
-                  <BsPlus
-                    size={40}
-                  />
+                  <BsPlus size={40} />
                 </div>
               </div>
             </div>

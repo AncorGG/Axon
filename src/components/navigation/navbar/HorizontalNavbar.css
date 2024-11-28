@@ -11,9 +11,18 @@
   flex-direction: row;
   align-items: center;
   justify-content: start;
-  padding: 1em 0 1em 3em;
+  padding-left: 3em;
 
   cursor: pointer;
+}
+
+.option-selected {
+  background-color: #ffe9d4;
+}
+
+.option-selected p {
+  color: var(--light-green);
+  font-weight: 600;
 }
 
 .horizontal-nav-text {
@@ -31,8 +40,10 @@
   }
 
   .horizontal-nav-option-container {
+    height: 90vh;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
   }
 
   .horizontal-display-container {

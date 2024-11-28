@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../../displays/header/Header";
 import {
   BsController,
@@ -11,6 +11,9 @@ import "./HorizontalNavbar.css";
 
 function HorizontalNavbar() {
   const nav = useNavigate();
+  const location = useLocation();
+
+  const selectedPath = location.pathname;
 
   return (
     <>
@@ -18,7 +21,9 @@ function HorizontalNavbar() {
         <Header />
         <div className="horizontal-nav-option-container">
           <div
-            className="horizontal-nav-option"
+            className={`horizontal-nav-option ${
+              selectedPath === "/home" ? "option-selected" : ""
+            }`}
             onClick={() => {
               nav("/home");
             }}
@@ -27,7 +32,9 @@ function HorizontalNavbar() {
             <p className="horizontal-nav-text">Home</p>
           </div>
           <div
-            className="horizontal-nav-option"
+            className={`horizontal-nav-option ${
+              selectedPath === "/exercise" ? "option-selected" : ""
+            }`}
             onClick={() => {
               nav("/exercise");
             }}
@@ -36,7 +43,9 @@ function HorizontalNavbar() {
             <p className="horizontal-nav-text">Exercises</p>
           </div>
           <div
-            className="horizontal-nav-option"
+            className={`horizontal-nav-option ${
+              selectedPath === "/milestones" ? "option-selected" : ""
+            }`}
             onClick={() => {
               nav("/milestones");
             }}
@@ -45,7 +54,9 @@ function HorizontalNavbar() {
             <p className="horizontal-nav-text">Milestones</p>
           </div>
           <div
-            className="horizontal-nav-option"
+            className={`horizontal-nav-option ${
+              selectedPath === "/user" ? "option-selected" : ""
+            }`}
             onClick={() => {
               nav("/user");
             }}
@@ -54,7 +65,9 @@ function HorizontalNavbar() {
             <p className="horizontal-nav-text">Profile</p>
           </div>
           <div
-            className="horizontal-nav-option"
+            className={`horizontal-nav-option ${
+              selectedPath === "/settings" ? "option-selected" : ""
+            }`}
             onClick={() => {
               nav("/settings");
             }}

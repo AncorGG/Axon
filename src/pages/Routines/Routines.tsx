@@ -15,6 +15,8 @@ import { useEffect, useState } from "react";
 import { Routine } from "../../../public/models/RoutineListType";
 import { useNavigate, useParams } from "react-router-dom";
 import { RoutineService } from "../../services/routine.service";
+import { Exercise } from "../../../public/models/ExerciseListType";
+import { RoutineExerciseService } from "../../services/routine.exercise.service";
 
 interface RoutineContentProps {
   title: string;
@@ -30,14 +32,32 @@ const RoutineContent = ({
   const [title, setTitle] = useState(initialTitle);
   const [description, setDescription] = useState(initialDescription);
   const navigate = useNavigate();
+  const [exercises, setExercises] = useState<Exercise[]>([]);
   const { id_routine } = useParams();
 
+  useEffect(() => {
+    fetchExercises();
+  }, []);
+
+  const fetchExercises = async () => {
+    if (id_routine) {
+      try {
+        const id = Number(id_routine);
+        const data = await RoutineExerciseService.getExerciseByRoutineId(id);
+        const exercisesList = data.map((item) => item.exercise);
+        setExercises(exercisesList);
+        console.log(exercises);
+      } catch (error) {
+        console.error("Error fetching exercises:", error);
+      }
+    }
+  };
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
     if (isNew) {
       const newRoutine = {
-        name: title,
+        routine_name: title,
         description: description,
       };
       console.log(newRoutine);
@@ -53,7 +73,7 @@ const RoutineContent = ({
         const id = Number(id_routine);
         const updatedRoutine = {
           id_routine: Number(id),
-          name: title,
+          routine_name: title,
           description: description,
           id_user: 1,
         };
@@ -98,7 +118,7 @@ const RoutineContent = ({
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="routine-info-text"
+                className="routine-info-textarea"
                 placeholder="Enter routine description"
               />
             </form>
@@ -188,7 +208,7 @@ export function Routines() {
   if (routine) {
     return (
       <RoutineContent
-        title={routine.name}
+        title={routine.routine_name}
         description={routine.description}
         isNew={false}
       />
