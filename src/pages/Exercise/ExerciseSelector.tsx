@@ -9,8 +9,6 @@ import ExtraDisplay from "../../components/navigation/extra-display/ExtraDisplay
 import Return from "../../components/navigation/return/Return";
 import { BsPencil, BsPlus, BsTrash } from "react-icons/bs";
 import "./ExerciseSelector.css";
-import { RoutineService } from "../../services/routine.service";
-import { ExerciseService } from "../../services/exercise.service";
 
 function ExerciseSelector() {
   const [exercises, setExercises] = useState<Exercise[]>([]);
@@ -24,7 +22,11 @@ function ExerciseSelector() {
 
   const fetchExercises = async () => {
     try {
-      const data = await ExerciseService.getExercises();
+      const response = await fetch("/models/ExerciseList.json");
+      if (!response.ok) {
+        throw new Error("Failed to fetch exercises");
+      }
+      const data = await response.json();
       setExercises(data);
     } catch (error) {
       console.error("Error fetching exercises:", error);
@@ -33,7 +35,11 @@ function ExerciseSelector() {
 
   const fetchRoutines = async () => {
     try {
-      const data = await RoutineService.getRoutines();
+      const response = await fetch("/models/RoutineList.json");
+      if (!response.ok) {
+        throw new Error("Failed to fetch routines");
+      }
+      const data = await response.json();
       setRoutines(data);
     } catch (error) {
       console.error("Error fetching routines:", error);
@@ -46,7 +52,7 @@ function ExerciseSelector() {
 
   const handleDeleteRoutine = async (id: number) => {
     try {
-      await RoutineService.deleteRoutine(id);
+      //await RoutineService.deleteRoutine(id);
       fetchRoutines();
     } catch (error) {
       console.error("Error deleting routine:", error);
@@ -71,9 +77,7 @@ function ExerciseSelector() {
                     <BsPencil
                       size={20}
                       color="#b1590b"
-                      onClick={() =>
-                        navigate(`/exercise/routines/${routine.id_routine}`)
-                      }
+                      onClick={() => navigate(`/exercise/routines/new`)}
                     />
                     <BsTrash
                       size={20}

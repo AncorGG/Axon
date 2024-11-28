@@ -14,9 +14,6 @@ import { Select } from "antd";
 import { useEffect, useState } from "react";
 import { Routine } from "../../../public/models/RoutineListType";
 import { useNavigate, useParams } from "react-router-dom";
-import { RoutineService } from "../../services/routine.service";
-import { Exercise } from "../../../public/models/ExerciseListType";
-import { RoutineExerciseService } from "../../services/routine.exercise.service";
 
 interface RoutineContentProps {
   title: string;
@@ -32,60 +29,29 @@ const RoutineContent = ({
   const [title, setTitle] = useState(initialTitle);
   const [description, setDescription] = useState(initialDescription);
   const navigate = useNavigate();
-  const [exercises, setExercises] = useState<Exercise[]>([]);
   const { id_routine } = useParams();
 
-  useEffect(() => {
-    fetchExercises();
-  }, []);
-
-  const fetchExercises = async () => {
-    if (id_routine) {
-      try {
-        const id = Number(id_routine);
-        const data = await RoutineExerciseService.getExerciseByRoutineId(id);
-        const exercisesList = data.map((item) => item.exercise);
-        setExercises(exercisesList);
-        console.log(exercises);
-      } catch (error) {
-        console.error("Error fetching exercises:", error);
-      }
-    }
-  };
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    const routineData = {
+      routine_name: title,
+      description: description,
+      id_user: 1,
+    };
 
     if (isNew) {
-      const newRoutine = {
-        routine_name: title,
-        description: description,
-      };
-      console.log(newRoutine);
-
+      console.log("Creating new routine:", routineData);
       try {
-        const createRoutine = await RoutineService.addRoutine(newRoutine);
-        console.log(createRoutine);
+        // const createdRoutine = await RoutineService.createRoutine(routineData);
       } catch (error) {
         console.error("Error creating new routine:", error);
       }
-    } else {
-      if (id_routine) {
-        const id = Number(id_routine);
-        const updatedRoutine = {
-          id_routine: Number(id),
-          routine_name: title,
-          description: description,
-          id_user: 1,
-        };
-        try {
-          const updatedData = await RoutineService.updateRoutine(
-            id,
-            updatedRoutine
-          );
-          console.log("Updated routine:", updatedData);
-        } catch (error) {
-          console.error("Error updating routine:", error);
-        }
+    } else if (id_routine) {
+      console.log("Updating routine:", routineData);
+      try {
+        // const updatedData = await RoutineService.updateRoutine(Number(id_routine), routineData);
+      } catch (error) {
+        console.error("Error updating routine:", error);
       }
     }
     navigate("/exercise");
@@ -100,7 +66,6 @@ const RoutineContent = ({
           <div className="routine-info-container">
             <form onSubmit={handleSubmit}>
               <div className="routine-info-header">
-                {" "}
                 <input
                   type="text"
                   value={title}
@@ -124,7 +89,7 @@ const RoutineContent = ({
             </form>
           </div>
           <div className="routine-list-container">
-            <p className="routine-list-title">Exercises (1)</p>
+            <p className="routine-list-title">Exercises</p>
             <div className="routine-card">
               <img
                 src="/images/brain.jpg"
@@ -133,13 +98,12 @@ const RoutineContent = ({
               />
               <div className="routine-card-info">
                 <div className="routine-card-header">
-                  <p className="routine-card-text">Digit Bash</p>
+                  <p className="routine-card-text">Name</p>
                   <BsTrash size={24} color="#ff0e0e" className="routine-icon" />
                 </div>
                 <Select
                   defaultValue="Easy"
                   style={{ width: 120 }}
-                  // onChange={handleChange}
                   options={[
                     { value: "1", label: "Easy" },
                     { value: "2", label: "Medium" },
@@ -153,6 +117,7 @@ const RoutineContent = ({
                 <BsChevronDown className="routine-icon" />
               </div>
             </div>
+
             <div className="routine-add-card">
               <BsPlus size={45} className="routine-plus-icon" />
             </div>
@@ -182,8 +147,9 @@ export function Routines() {
 
       if (id !== null) {
         try {
-          const data = await RoutineService.getRoutineById(id);
-          setRoutine(data);
+          // Fetch routine using RoutineService (uncomment when service is implemented)
+          // const data = await RoutineService.getRoutineById(id);
+          // setRoutine(data);
         } catch (error) {
           console.error(`Error fetching routine for ID ${id_routine}:`, error);
         }
@@ -215,6 +181,6 @@ export function Routines() {
     );
   }
 
-  //Default case
+  // Default case
   return <div>Loading routine...</div>;
 }

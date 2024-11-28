@@ -1,0 +1,37 @@
+[
+  {
+    "id_exercise": 1,
+    "exercise_name": "Digit-Bash Easy",
+    "difficulty": 4,
+    "speed": 4.0,
+    "experience": 50
+  },
+  {
+    "id_exercise": 2,
+    "exercise_name": "Digit-Bash Medium",
+    "difficulty": 6,
+    "speed": 3.0,
+    "experience": 30
+  },
+  {
+    "id_exercise": 3,
+    "exercise_name": "Digit-Bash Hard",
+    "difficulty": 8,
+    "speed": 2.0,
+    "experience": 70
+  },
+  {
+    "id_exercise": 4,
+    "exercise_name": "Digit-Bash Expert",
+    "difficulty": 10,
+    "speed": 1.0,
+    "experience": 60
+  },
+  {
+    "id_exercise": 5,
+    "exercise_name": "Digit-Bash Hardcore",
+    "difficulty": 12,
+    "speed": 0.5,
+    "experience": 100
+  }
+]

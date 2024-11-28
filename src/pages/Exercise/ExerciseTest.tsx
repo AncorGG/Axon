@@ -7,25 +7,36 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Exercise } from "../../../public/models/ExerciseListType";
 import "./ExerciseTest.css";
-import { ExerciseService } from "../../services/exercise.service";
 
 function ExerciseTest() {
   const [mode, setMode] = useState<"read" | "write" | "review">("read");
-  const { id_exercise } = useParams();
+  const { id_exercise } = useParams<{ id_exercise?: string }>();
   const [exercise, setExercise] = useState<Exercise | null>(null);
   const nav = useNavigate();
 
   useEffect(() => {
     const fetchExercise = async () => {
       try {
-        const id = id_exercise ? parseInt(id_exercise) : NaN;
-        if (isNaN(id)) {
+        const response = await fetch("/models/ExerciseList.json");
+        if (!response.ok) {
+          throw new Error("Failed to fetch exercises");
+        }
+        const data: Exercise[] = await response.json();
+
+        // Convert `id_exercise` to a number for comparison
+        const exerciseId = id_exercise ? parseInt(id_exercise, 10) : NaN;
+
+        if (isNaN(exerciseId)) {
           console.error("Invalid exercise ID:", id_exercise);
           return;
         }
-        const data = await ExerciseService.getExerciseById(id);
-        if (data) {
-          setExercise(data);
+
+        const foundExercise = data.find(
+          (ex) => ex.id_exercise === exerciseId // Compare as numbers
+        );
+
+        if (foundExercise) {
+          setExercise(foundExercise);
         } else {
           console.error("Exercise not found.");
         }
@@ -33,6 +44,7 @@ function ExerciseTest() {
         console.error("Error fetching exercise:", error);
       }
     };
+
     if (id_exercise) {
       fetchExercise();
     }
