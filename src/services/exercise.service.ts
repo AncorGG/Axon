@@ -21,4 +21,15 @@ export const ExerciseService = {
       throw error;
     }
   },
+
+  deleteExerciseById: async (id_routine: number, id_exercise: number) => {
+    try {
+      const response = await axios.delete<Exercise>(
+        `${endPoint}/${id_routine}/${id_exercise}`
+      );
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
 };

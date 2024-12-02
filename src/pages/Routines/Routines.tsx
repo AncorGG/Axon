@@ -17,12 +17,21 @@ import { useNavigate, useParams } from "react-router-dom";
 import { RoutineService } from "../../services/routine.service";
 import { Exercise } from "../../../public/models/ExerciseListType";
 import { RoutineExerciseService } from "../../services/routine.exercise.service";
+import { ExerciseService } from "../../services/exercise.service";
 
 interface RoutineContentProps {
   title: string;
   description: string;
   isNew: boolean;
 }
+
+const defaultOptions = [
+  { value: "4", label: "Easy" },
+  { value: "6", label: "Medium" },
+  { value: "8", label: "Hard" },
+  { value: "10", label: "Extreme" },
+  { value: "1", label: "Hardcore" },
+];
 
 const RoutineContent = ({
   title: initialTitle,
@@ -36,7 +45,9 @@ const RoutineContent = ({
   const { id_routine } = useParams();
 
   useEffect(() => {
-    fetchExercises();
+    if (id_routine !== "new") {
+      fetchExercises();
+    }
   }, []);
 
   const fetchExercises = async () => {
@@ -44,14 +55,17 @@ const RoutineContent = ({
       try {
         const id = Number(id_routine);
         const data = await RoutineExerciseService.getExerciseByRoutineId(id);
-        const exercisesList = data.map((item) => item.exercise);
-        setExercises(exercisesList);
-        console.log(exercises);
+        if (data !== null) {
+          const exercisesList = data.map((item) => item.exercise);
+          setExercises(exercisesList);
+        }
       } catch (error) {
         console.error("Error fetching exercises:", error);
+        window.location.reload();
       }
     }
   };
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -91,6 +105,42 @@ const RoutineContent = ({
     navigate("/exercise");
   };
 
+  const handleAddExercise = async () => {
+    const newExercise: Exercise = {
+      id_exercise: Date.now(),
+      exercise_name: "New Exercise",
+      difficulty: 4,
+      speed: 4,
+      experience: 15,
+    };
+
+    const sequence_order = exercises.length + 1;
+
+    setExercises((prevExercises) => [...prevExercises, newExercise]);
+
+    if (id_routine) {
+      try {
+        const id = Number(id_routine);
+        await RoutineExerciseService.addExerciseToRoutine(
+          id,
+          newExercise,
+          sequence_order
+        );
+      } catch (error) {
+        console.error("Error adding new exercise:", error);
+      }
+    }
+  };
+
+  const handleDeleteExercise = async (id_exercise: number) => {
+    try {
+      await ExerciseService.deleteExerciseById(Number(id_routine), id_exercise);
+    } catch (error) {
+      console.log(error);
+    }
+    fetchExercises();
+  };
+
   return (
     <div className="main-container">
       <HorizontalNavbar />
@@ -123,37 +173,54 @@ const RoutineContent = ({
               />
             </form>
           </div>
+
           <div className="routine-list-container">
-            <p className="routine-list-title">Exercises (1)</p>
-            <div className="routine-card">
-              <img
-                src="/images/brain.jpg"
-                alt="Exercise icon"
-                className="routine-card-image"
-              />
-              <div className="routine-card-info">
-                <div className="routine-card-header">
-                  <p className="routine-card-text">Digit Bash</p>
-                  <BsTrash size={24} color="#ff0e0e" className="routine-icon" />
+            <p className="routine-list-title">Exercises ({exercises.length})</p>
+
+            {exercises.length > 0 ? (
+              exercises.map((exercise) => (
+                <div className="routine-card" key={exercise.id_exercise}>
+                  <img
+                    src="/images/brain.jpg"
+                    alt="Exercise icon"
+                    className="routine-card-image"
+                  />
+                  <div className="routine-card-info">
+                    <div className="routine-card-header">
+                      <p className="routine-card-text">
+                        {exercise.exercise_name}
+                      </p>
+                      <BsTrash
+                        size={24}
+                        color="#ff0e0e"
+                        className="routine-icon"
+                        onClick={() =>
+                          handleDeleteExercise(exercise.id_exercise)
+                        }
+                      />
+                    </div>
+                    <Select
+                      defaultValue={
+                        defaultOptions.find(
+                          (option) =>
+                            option.value === String(exercise.difficulty)
+                        )?.value
+                      }
+                      style={{ width: 120 }}
+                      options={defaultOptions}
+                    />
+                  </div>
+                  <div className="routine-card-selectors">
+                    <BsChevronUp className="routine-icon" />
+                    <BsChevronDown className="routine-icon" />
+                  </div>
                 </div>
-                <Select
-                  defaultValue="Easy"
-                  style={{ width: 120 }}
-                  // onChange={handleChange}
-                  options={[
-                    { value: "1", label: "Easy" },
-                    { value: "2", label: "Medium" },
-                    { value: "3", label: "Hard" },
-                    { value: "4", label: "Extreme" },
-                  ]}
-                />
-              </div>
-              <div className="routine-card-selectors">
-                <BsChevronUp className="routine-icon" />
-                <BsChevronDown className="routine-icon" />
-              </div>
-            </div>
-            <div className="routine-add-card">
+              ))
+            ) : (
+              <p>No exercises loaded</p>
+            )}
+
+            <div className="routine-add-card" onClick={handleAddExercise}>
               <BsPlus size={45} className="routine-plus-icon" />
             </div>
           </div>
