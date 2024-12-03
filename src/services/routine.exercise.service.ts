@@ -1,8 +1,5 @@
 import axios from "axios";
-import {
-  Exercise,
-  ExerciseResponse,
-} from "../../public/models/ExerciseListType";
+import { ExerciseResponse } from "../../public/models/ExerciseListType";
 
 const endPoint = "http://localhost:8080/api/routine-exercise";
 

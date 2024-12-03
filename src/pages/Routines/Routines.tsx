@@ -13,7 +13,7 @@ import "./Routines.css";
 import { Select } from "antd";
 import { useEffect, useState } from "react";
 import { Routine } from "../../../public/models/RoutineListType";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { RoutineService } from "../../services/routine.service";
 import { Exercise } from "../../../public/models/ExerciseListType";
 import { RoutineExerciseService } from "../../services/routine.exercise.service";
@@ -40,7 +40,6 @@ const RoutineContent = ({
 }: RoutineContentProps) => {
   const [title, setTitle] = useState(initialTitle);
   const [description, setDescription] = useState(initialDescription);
-  const navigate = useNavigate();
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [tempExercises, setTempExercises] = useState<Exercise[]>([]);
   const { id_routine } = useParams();
