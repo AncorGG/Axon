@@ -17,23 +17,13 @@ export const RoutineExerciseService = {
   },
 
   addExerciseToRoutine: async (
-    id_routine: number,
-    exercise: Exercise,
-    sequence_order: number
+    routineId: number,
+    exerciseId: number,
+    sequenceOrder: number
   ) => {
-    const routineExercise = {
-      routine: { id_routine },
-      exercise,
-      sequence_order,
-    };
-
     try {
       const response = await axios.post(
-        `${endPoint}/${id_routine}`,
-        routineExercise,
-        {
-          headers: { "Content-Type": "application/json" },
-        }
+        `${endPoint}/${routineId}/${exerciseId}/${sequenceOrder}`
       );
       return response.data;
     } catch (error) {

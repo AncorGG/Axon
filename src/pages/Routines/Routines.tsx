@@ -42,6 +42,7 @@ const RoutineContent = ({
   const [description, setDescription] = useState(initialDescription);
   const navigate = useNavigate();
   const [exercises, setExercises] = useState<Exercise[]>([]);
+  const [tempExercises, setTempExercises] = useState<Exercise[]>([]);
   const { id_routine } = useParams();
 
   useEffect(() => {
@@ -58,6 +59,7 @@ const RoutineContent = ({
         if (data !== null) {
           const exercisesList = data.map((item) => item.exercise);
           setExercises(exercisesList);
+          setTempExercises(exercisesList);
         }
       } catch (error) {
         console.error("Error fetching exercises:", error);
@@ -65,6 +67,60 @@ const RoutineContent = ({
       }
     }
   };
+
+  async function getExistingRoutineExercises(id: number) {
+    try {
+      return await RoutineExerciseService.getExerciseByRoutineId(id);
+    } catch (error) {
+      console.error("Error fetching existing exercises:", error);
+      throw error;
+    }
+  }
+
+  async function addAllNewExercises(id: number, tempExercises: any[]) {
+    for (const [index, exercise] of tempExercises.entries()) {
+      const sequence_order = index + 1;
+      await handleExerciseAddition(id, exercise.id_exercise, sequence_order);
+    }
+  }
+
+  async function addNewExercises(
+    id: number,
+    existingRoutineExercises: any[],
+    tempExercises: any[]
+  ) {
+    const existingExerciseIds = existingRoutineExercises.map(
+      (rel) => rel.exercise.id_exercise
+    );
+
+    const newExercises = tempExercises.filter(
+      (exercise) => !existingExerciseIds.includes(exercise.id_exercise)
+    );
+
+    for (const [index, exercise] of newExercises.entries()) {
+      const sequence_order = existingRoutineExercises.length + index + 1;
+      await handleExerciseAddition(id, exercise.id_exercise, sequence_order);
+    }
+  }
+
+  async function handleExerciseAddition(
+    id: number,
+    exerciseId: number,
+    sequenceOrder: number
+  ) {
+    try {
+      await RoutineExerciseService.addExerciseToRoutine(
+        id,
+        exerciseId,
+        sequenceOrder
+      );
+    } catch (error) {
+      console.error(
+        `Error adding exercise with ID ${exerciseId} to routine:`,
+        error
+      );
+    }
+  }
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -74,11 +130,16 @@ const RoutineContent = ({
         routine_name: title,
         description: description,
       };
-      console.log(newRoutine);
 
       try {
         const createRoutine = await RoutineService.addRoutine(newRoutine);
-        console.log(createRoutine);
+
+        if (createRoutine && createRoutine.id_routine) {
+          const newRoutineId = createRoutine.id_routine;
+          await addAllNewExercises(newRoutineId, tempExercises);
+        } else {
+          console.error("Failed to get the ID of the newly created routine.");
+        }
       } catch (error) {
         console.error("Error creating new routine:", error);
       }
@@ -86,50 +147,69 @@ const RoutineContent = ({
       if (id_routine) {
         const id = Number(id_routine);
         const updatedRoutine = {
-          id_routine: Number(id),
+          id_routine: id,
           routine_name: title,
           description: description,
           id_user: 1,
         };
+
+        // Update Routine
         try {
-          const updatedData = await RoutineService.updateRoutine(
-            id,
-            updatedRoutine
-          );
-          console.log("Updated routine:", updatedData);
+          await RoutineService.updateRoutine(id, updatedRoutine);
         } catch (error) {
           console.error("Error updating routine:", error);
         }
+
+        // Update RoutineExercise
+        try {
+          const existingRoutineExercises = await getExistingRoutineExercises(
+            id
+          );
+
+          if (existingRoutineExercises && existingRoutineExercises.length > 0) {
+            const existingExerciseIds = existingRoutineExercises.map(
+              (rel) => rel.exercise.id_exercise
+            );
+
+            // Find exercises to delete
+            const exercisesToDelete = existingExerciseIds.filter(
+              (id_exercise) =>
+                !tempExercises.some(
+                  (exercise) => exercise.id_exercise === id_exercise
+                )
+            );
+
+            for (const id_exercise of exercisesToDelete) {
+              await handleDeleteExercise(id_exercise);
+            }
+
+            await addNewExercises(id, existingRoutineExercises, tempExercises);
+          } else {
+            await addAllNewExercises(id, tempExercises);
+          }
+        } catch (error) {
+          console.error("Error managing routine exercises:", error);
+        }
       }
     }
-    navigate("/exercise");
   };
 
   const handleAddExercise = async () => {
-    const newExercise: Exercise = {
-      id_exercise: Date.now(),
-      exercise_name: "New Exercise",
-      difficulty: 4,
-      speed: 4,
-      experience: 15,
-    };
+    const availableExercises = await ExerciseService.getExercises();
 
-    const sequence_order = exercises.length + 1;
+    const exercisesInRoutine = tempExercises.map((e) => e.id_exercise);
+    const filteredExercises = availableExercises.filter(
+      (exercise) => !exercisesInRoutine.includes(exercise.id_exercise)
+    );
 
-    setExercises((prevExercises) => [...prevExercises, newExercise]);
-
-    if (id_routine) {
-      try {
-        const id = Number(id_routine);
-        await RoutineExerciseService.addExerciseToRoutine(
-          id,
-          newExercise,
-          sequence_order
-        );
-      } catch (error) {
-        console.error("Error adding new exercise:", error);
-      }
+    if (filteredExercises.length === 0) {
+      console.log("Todos los ejercicios disponibles ya están en la lista.");
+      return;
     }
+
+    const newExercise = filteredExercises[0];
+
+    setTempExercises((prevExercises) => [...prevExercises, newExercise]);
   };
 
   const handleDeleteExercise = async (id_exercise: number) => {
@@ -138,7 +218,13 @@ const RoutineContent = ({
     } catch (error) {
       console.log(error);
     }
-    fetchExercises();
+  };
+
+  const handleRemoveTempExercise = (id_exercise: number) => {
+    const updatedTempExercises = tempExercises.filter(
+      (exercise) => exercise.id_exercise !== id_exercise
+    );
+    setTempExercises(updatedTempExercises);
   };
 
   return (
@@ -177,8 +263,8 @@ const RoutineContent = ({
           <div className="routine-list-container">
             <p className="routine-list-title">Exercises ({exercises.length})</p>
 
-            {exercises.length > 0 ? (
-              exercises.map((exercise) => (
+            {tempExercises.length > 0 ? (
+              tempExercises.map((exercise) => (
                 <div className="routine-card" key={exercise.id_exercise}>
                   <img
                     src="/images/brain.jpg"
@@ -195,7 +281,7 @@ const RoutineContent = ({
                         color="#ff0e0e"
                         className="routine-icon"
                         onClick={() =>
-                          handleDeleteExercise(exercise.id_exercise)
+                          handleRemoveTempExercise(exercise.id_exercise)
                         }
                       />
                     </div>
