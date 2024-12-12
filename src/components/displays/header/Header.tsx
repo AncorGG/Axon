@@ -3,7 +3,7 @@ import "./Header.css";
 function Header() {
   return (
     <div className="header-container">
-      <h3 className="header-text">Axon</h3>
+      <h1 className="header-text">Axon</h1>
     </div>
   );
 }
