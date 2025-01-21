@@ -5,7 +5,7 @@ import {
   BsPlus,
   BsTrash,
 } from "react-icons/bs";
-import ExtraDisplay from "../../components/navigation/extra-display/ExtraDisplay";
+import ExtraDisplay from "../../components/displays/extra-display/ExtraDisplay";
 import HorizontalNavbar from "../../components/navigation/navbar/HorizontalNavbar";
 import Navbar from "../../components/navigation/navbar/Navbar";
 import Return from "../../components/navigation/return/Return";

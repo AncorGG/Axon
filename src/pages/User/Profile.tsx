@@ -6,7 +6,7 @@ import MilestoneDisplay from "../../components/displays/milestone-display/Milest
 import "./Profile.css";
 import ExperienceDisplay from "../../components/displays/experience/ExperienceDisplay";
 import HorizontalNavbar from "../../components/navigation/navbar/HorizontalNavbar";
-import ExtraDisplay from "../../components/navigation/extra-display/ExtraDisplay";
+import ExtraDisplay from "../../components/displays/extra-display/ExtraDisplay";
 
 function Profile() {
   const navitage = useNavigate();

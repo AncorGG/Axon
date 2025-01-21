@@ -4,7 +4,7 @@ import MilestoneDisplay from "../../components/displays/milestone-display/Milest
 import "./Milestones.css";
 import WeeklyGoals from "../../components/displays/weekly-goals/WeeklyGoals";
 import HorizontalNavbar from "../../components/navigation/navbar/HorizontalNavbar";
-import ExtraDisplay from "../../components/navigation/extra-display/ExtraDisplay";
+import ExtraDisplay from "../../components/displays/extra-display/ExtraDisplay";
 
 function Milestones() {
   return (
@@ -15,7 +15,7 @@ function Milestones() {
         <MilestoneDisplay />
         <WeeklyGoals />
       </div>
-      <ExtraDisplay/>
+      <ExtraDisplay />
       <Navbar />
     </div>
   );

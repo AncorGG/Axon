@@ -1,5 +1,5 @@
-import ExperienceDisplay from "../../displays/experience/ExperienceDisplay";
-import WeeklyGoals from "../../displays/weekly-goals/WeeklyGoals";
+import ExperienceDisplay from "../experience/ExperienceDisplay";
+import WeeklyGoals from "../weekly-goals/WeeklyGoals";
 import "./ExtraDisplay.css";
 
 function ExtraDisplay() {

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Exercise } from "../../../public/models/ExerciseListType";
 import { Routine } from "../../../public/models/RoutineListType";
 import HorizontalNavbar from "../../components/navigation/navbar/HorizontalNavbar";
-import ExtraDisplay from "../../components/navigation/extra-display/ExtraDisplay";
+import ExtraDisplay from "../../components/displays/extra-display/ExtraDisplay";
 import Return from "../../components/navigation/return/Return";
 import { BsPencil, BsPlus, BsTrash } from "react-icons/bs";
 import "./ExerciseSelector.css";

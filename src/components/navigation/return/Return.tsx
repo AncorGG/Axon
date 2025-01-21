@@ -7,10 +7,10 @@ function Return() {
 
   return (
     <>
-      <div className="return-container" onClick={() => navigate(-1)}>
+      <button className="return-container" onClick={() => navigate(-1)}>
         <BsChevronLeft className="return-icon" size={35} />
         <p className="return-text">Return</p>
-      </div>
+      </button>
     </>
   );
 }

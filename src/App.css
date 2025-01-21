@@ -3,6 +3,10 @@ body {
   background-color: #f1f0f9;
 }
 
+button {
+  all: unset;
+}
+
 .ant-select,
 .ant-select-selector,
 .ant-select-item,

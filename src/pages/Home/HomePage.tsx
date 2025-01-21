@@ -3,7 +3,7 @@ import Card from "../../components/displays/card/Card";
 import Navbar from "../../components/navigation/navbar/Navbar";
 import HorizontalNavbar from "../../components/navigation/navbar/HorizontalNavbar";
 import "./HomePage.css";
-import ExtraDisplay from "../../components/navigation/extra-display/ExtraDisplay";
+import ExtraDisplay from "../../components/displays/extra-display/ExtraDisplay";
 
 function HomePage() {
   const nav = useNavigate();
