@@ -34,6 +34,7 @@ function Navbar() {
     <div className="nav-container">
       <div className="nav-icon-container">
         <BsController
+          data-testid="exercise-icon"
           className={`nav-icon ${
             selectedPath === "/exercise" ||
             selectedPath === "/exercise/test" ||
@@ -46,6 +47,7 @@ function Navbar() {
           onClick={() => goto("/exercise")}
         />
         <BsTrophy
+          data-testid="milestones-icon"
           className={`nav-icon ${
             selectedPath === "/milestones" ||
             selectedPath === "/milestones/goals"
@@ -56,6 +58,7 @@ function Navbar() {
           onClick={() => goto("/milestones")}
         />
         <BsHouseDoor
+          data-testid="home-icon"
           className={`nav-icon ${
             selectedPath === "/home" ? "nav-icon-selected" : ""
           }`}
@@ -63,6 +66,7 @@ function Navbar() {
           onClick={() => goto("/home")}
         />
         <BsGear
+          data-testid="settings-icon"
           className={`nav-icon ${
             selectedPath === "/settings" ? "nav-icon-selected" : ""
           }`}
@@ -70,6 +74,7 @@ function Navbar() {
           onClick={() => goto("/settings")}
         />
         <BsPerson
+          data-testid="user-icon"
           className={`nav-icon ${
             selectedPath === "/user" ? "nav-icon-selected" : ""
           }`}
