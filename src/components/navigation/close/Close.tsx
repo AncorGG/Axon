@@ -20,9 +20,9 @@ function Close(props: ReturnProp) {
 
   return (
     <>
-      <div className="close-container" onClick={handleNavigate}>
+      <button className="close-container" onClick={handleNavigate}>
         <BsXLg className="close-icon" size={35} />
-      </div>
+      </button>
     </>
   );
 }

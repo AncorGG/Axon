@@ -18,6 +18,9 @@ function ExerciseSelector() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log(
+      "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa"
+    );
     fetchRoutines();
     fetchExercises();
   }, []);
@@ -34,6 +37,7 @@ function ExerciseSelector() {
   const fetchRoutines = async () => {
     try {
       const data = await RoutineService.getRoutines();
+      console.log("FETCH ROUTINES", data);
       setRoutines(data);
     } catch (error) {
       console.error("Error fetching routines:", error);
@@ -62,6 +66,7 @@ function ExerciseSelector() {
           <div className="exercise-routine-container">
             <p className="exercise-routine-title">Your Routines</p>
             <div className="exercise-routine-list">
+              HELP{exercises.length}
               {routines.map((routine) => (
                 <div key={routine.id_routine} className="exercise-routine">
                   <p className="exercise-routine-text">
