@@ -7,6 +7,6 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "happy-dom",
-    timeout: 10000,
+    testTimeout: 10000,
   },
 });

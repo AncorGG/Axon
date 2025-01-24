@@ -34,7 +34,7 @@ function DigitBash(props: DigitBashProps) {
         }
       }
       setRandomCode(code);
-      console.log("actual random code: " + code);
+      console.log("Generated Number: " + code);
       setCurrentDigitIndex(-1);
     }
   }, [type, digitLength]);
