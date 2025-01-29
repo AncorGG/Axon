@@ -6,12 +6,15 @@ import {
   BsPerson,
 } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import Header from "../../components/displays/header/Header";
 import "./ProfileRegister.css";
 
 function ProfileRegister() {
   const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleRegister = () => {
     navigate("/user");
@@ -20,7 +23,29 @@ function ProfileRegister() {
   const handleSignIn = (event: FormEvent) => {
     event.preventDefault();
     navigate("/user");
-    console.log("Form submitted");
+  };
+
+  const handleDataVerification = (event: FormEvent) => {
+    event.preventDefault();
+
+    if (!username || !/^[a-zA-Z0-9_]{3,15}$/.test(username)) {
+      console.error(
+        "Please, insert a valid username (3-15 characters, letters and/or numbers)."
+      );
+      return;
+    }
+
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.toLowerCase())) {
+      console.error("Please, insert a valid email address");
+      return;
+    }
+
+    if (!password || password.length < 8) {
+      console.error("Password must contain at least 8 characters");
+      return;
+    }
+
+    handleRegister();
   };
 
   return (
@@ -38,6 +63,7 @@ function ProfileRegister() {
                 type="text"
                 placeholder="Value"
                 className="form-input"
+                onChange={(e) => setUsername(e.target.value)}
               />
             </div>
             <p className="form-label">Email</p>
@@ -48,6 +74,7 @@ function ProfileRegister() {
                 type="text"
                 placeholder="Value"
                 className="form-input"
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <p className="form-label">Password</p>
@@ -58,6 +85,7 @@ function ProfileRegister() {
                 type="text"
                 placeholder="Value"
                 className="form-input"
+                onChange={(e) => setPassword(e.target.value)}
               />
               <BsEye size={20} />
             </div>
@@ -69,7 +97,7 @@ function ProfileRegister() {
               <button
                 type="button"
                 className="form-button-reg register-btn"
-                onClick={handleRegister}
+                onClick={handleDataVerification}
               >
                 Register
               </button>
