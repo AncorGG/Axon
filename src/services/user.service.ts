@@ -14,10 +14,10 @@ export const register = async (username: any, email: any, password: any) => {
   }
 };
 
-export const login = async (email: any, password: any) => {
+export const login = async (username: any, password: any) => {
   try {
     const response = await axios.post(`${endPoint}/login`, null, {
-      params: { email, password },
+      params: { username, password },
     });
     return response.data;
   } catch (error) {

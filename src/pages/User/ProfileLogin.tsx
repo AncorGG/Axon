@@ -7,7 +7,7 @@ import { login } from "../../services/user.service";
 
 function ProfileLogin() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleRegister = () => {
@@ -16,7 +16,7 @@ function ProfileLogin() {
 
   const handleSignIn = async () => {
     try {
-      await login(email, password);
+      await login(username, password);
       postMessage("Logeado con éxito");
       navigate("/user");
     } catch (error) {
@@ -27,7 +27,7 @@ function ProfileLogin() {
   const handleDataVerification = (event: FormEvent) => {
     event.preventDefault();
 
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.toLowerCase())) {
+    if (!username) {
       console.error("Please, insert a valid email address");
       return;
     }
@@ -47,14 +47,14 @@ function ProfileLogin() {
         <p className="form-title">Login</p>
         <div className="form-container">
           <form onSubmit={handleSignIn} className="log-form">
-            <p className="form-label">Email</p>
+            <p className="form-label">Usename</p>
             <div className="form-input-container">
               <BsEnvelope size={20} />
               <input
                 type="text"
                 placeholder="Value"
                 className="form-input"
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </div>
             <p className="form-label">Password</p>
