@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FormEvent, useState } from "react";
 import Header from "../../components/displays/header/Header";
 import "./ProfileLogin.css";
+import { login } from "../../services/user.service";
 
 function ProfileLogin() {
   const navigate = useNavigate();
@@ -13,8 +14,14 @@ function ProfileLogin() {
     navigate("/user/register");
   };
 
-  const handleSignIn = () => {
-    navigate("/user");
+  const handleSignIn = async () => {
+    try {
+      await login(email, password);
+      postMessage("Logeado con éxito");
+      navigate("/user");
+    } catch (error) {
+      postMessage("Error en el login");
+    }
   };
 
   const handleDataVerification = (event: FormEvent) => {

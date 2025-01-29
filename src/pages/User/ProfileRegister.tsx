@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { FormEvent, useState } from "react";
 import Header from "../../components/displays/header/Header";
 import "./ProfileRegister.css";
+import { register } from "../../services/user.service";
 
 function ProfileRegister() {
   const navigate = useNavigate();
@@ -16,13 +17,14 @@ function ProfileRegister() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleRegister = () => {
-    navigate("/user");
-  };
-
-  const handleSignIn = (event: FormEvent) => {
-    event.preventDefault();
-    navigate("/user");
+  const handleRegister = async () => {
+    try {
+      await register(username, email, password);
+      postMessage("Usuario registrado con éxito");
+      navigate("/user");
+    } catch (error) {
+      postMessage("Error en el registro");
+    }
   };
 
   const handleDataVerification = (event: FormEvent) => {
@@ -54,7 +56,7 @@ function ProfileRegister() {
       <div className="login-container">
         <p className="form-title">Register</p>
         <div className="form-container">
-          <form onSubmit={handleSignIn} className="log-form">
+          <form onSubmit={handleDataVerification} className="log-form">
             <p className="form-label">Username</p>
             <div className="form-input-container">
               <BsPerson size={20} />
