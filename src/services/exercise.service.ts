@@ -3,10 +3,14 @@ import { Exercise } from "../../public/models/ExerciseListType";
 
 const endPoint = "http://localhost:8080/api/exercises";
 
+const username = "testAdmin";
+
 export const ExerciseService = {
   getExercises: async () => {
     try {
-      const response = await axios.get<Exercise[]>(endPoint);
+      const response = await axios.get<Exercise[]>(
+        `${endPoint}?username=${username}`
+      );
       return response.data;
     } catch (error) {
       throw error;
@@ -15,7 +19,9 @@ export const ExerciseService = {
 
   getExerciseById: async (id: number) => {
     try {
-      const response = await axios.get<Exercise>(`${endPoint}/${id}`);
+      const response = await axios.get<Exercise>(
+        `${endPoint}/${id}?username=${username}`
+      );
       return response.data;
     } catch (error) {
       throw error;
@@ -25,7 +31,7 @@ export const ExerciseService = {
   deleteExerciseById: async (id_routine: number, id_exercise: number) => {
     try {
       const response = await axios.delete<Exercise>(
-        `${endPoint}/${id_routine}/${id_exercise}`
+        `${endPoint}/${id_routine}/${id_exercise}?username=${username}`
       );
       return response.data;
     } catch (error) {
