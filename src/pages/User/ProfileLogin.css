@@ -1,4 +1,4 @@
-.user-form-main-container{
+.user-form-main-container {
   width: 100vw;
 }
 
@@ -55,7 +55,7 @@
 }
 
 .form-input {
-  width:50%;
+  width: 50%;
   border: none;
   outline: none;
   margin: 0 auto 0 5px;
@@ -89,4 +89,16 @@
 .form-bottom-text {
   margin: 0 1em 1em 1em;
   align-self: flex-start;
+}
+
+.form-bottom-text {
+  margin: 0 1em 1em 1em;
+  align-self: flex-start;
+}
+
+.error-text {
+  margin-top: 1em;
+  padding: 0 1em;
+  font-family: "Montserrat", sans-serif;
+  color: var(--warning-red);
 }

@@ -16,6 +16,9 @@ function ProfileRegister() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userError, setUserError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   const handleRegister = async () => {
     try {
@@ -30,23 +33,27 @@ function ProfileRegister() {
   const handleDataVerification = (event: FormEvent) => {
     event.preventDefault();
 
-    if (!username || !/^[a-zA-Z0-9_]{3,15}$/.test(username)) {
-      console.error(
-        "Please, insert a valid username (3-15 characters, letters and/or numbers)."
+    if (!username || !/^[a-zA-Z0-9_]{3,25}$/.test(username)) {
+      setUserError(
+        "Please, insert a valid username (3-25 characters, letters and/or numbers)."
       );
       return;
     }
 
+    setUserError("");
+
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.toLowerCase())) {
-      console.error("Please, insert a valid email address");
+      setEmailError("Please, insert a valid email address");
       return;
     }
+
+    setEmailError("");
 
     if (!password || password.length < 8) {
-      console.error("Password must contain at least 8 characters");
+      setPasswordError("Password must contain at least 8 characters");
       return;
     }
-
+    setPasswordError("");
     handleRegister();
   };
 
@@ -65,32 +72,38 @@ function ProfileRegister() {
                 type="text"
                 placeholder="Value"
                 className="form-input"
+                value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
             </div>
+            <span className="error-text">{userError}</span>
             <p className="form-label">Email</p>
             <div className="form-input-container">
               <BsEnvelope size={20} />
               <input
                 id="email"
                 type="text"
-                placeholder="Value"
+                placeholder="example@gmail.com"
                 className="form-input"
+                value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
+            <span className="error-text">{emailError}</span>
             <p className="form-label">Password</p>
             <div className="form-input-container">
               <BsLock size={20} />
               <input
                 id="password"
                 type="text"
-                placeholder="Value"
+                placeholder="*********"
                 className="form-input"
+                value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
               <BsEye size={20} />
             </div>
+            <span className="error-text">{passwordError}</span>
             <div className="form-checkbox">
               <input type="checkbox" name="save-pass" id="save-pass" />
               <p className="form-check-text">Save Password?</p>

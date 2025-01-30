@@ -1,6 +1,6 @@
 import { BsEye, BsLock, BsPerson } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Header from "../../components/displays/header/Header";
 import "./ProfileLogin.css";
 import { login } from "../../services/user.service";
@@ -9,10 +9,14 @@ function ProfileLogin() {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [userError, setUserError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   const handleRegister = () => {
     navigate("/user/register");
   };
+
+  useEffect(() => {}, [userError, passwordError]);
 
   const handleSignIn = async () => {
     try {
@@ -27,16 +31,19 @@ function ProfileLogin() {
   const handleDataVerification = (event: FormEvent) => {
     event.preventDefault();
 
-    if (!username) {
-      console.error("Please, insert a valid email address");
+    if (!username || username.length > 25) {
+      setUserError("Insert a valid username (max length 25)");
       return;
     }
+
+    setUserError("");
 
     if (!password || password.length < 8) {
-      console.error("Password must contain at least 8 characters");
+      setPasswordError("Password must contain at least 8 characters");
       return;
     }
 
+    setPasswordError("");
     handleSignIn();
   };
 
@@ -54,9 +61,11 @@ function ProfileLogin() {
                 type="text"
                 placeholder="Value"
                 className="form-input"
+                value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
             </div>
+            <span className="error-text">{userError}</span>
             <p className="form-label">Password</p>
             <div className="form-input-container">
               <BsLock size={20} />
@@ -64,10 +73,12 @@ function ProfileLogin() {
                 type="text"
                 placeholder="Value"
                 className="form-input"
+                value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
               <BsEye size={20} />
             </div>
+            <span className="error-text">{passwordError}</span>
             <div className="form-button-container">
               <button
                 type="button"
