@@ -3,10 +3,14 @@ import { ExerciseResponse } from "../../public/models/ExerciseListType";
 
 const endPoint = "http://localhost:8080/api/routine-exercise";
 
+const username = "testAdmin";
+
 export const RoutineExerciseService = {
   getExerciseByRoutineId: async (id: number) => {
     try {
-      const response = await axios.get<ExerciseResponse[]>(`${endPoint}/${id}`);
+      const response = await axios.get<ExerciseResponse[]>(
+        `${endPoint}/${id}?username=${username}`
+      );
       return response.data;
     } catch (error) {
       return null;
@@ -20,7 +24,7 @@ export const RoutineExerciseService = {
   ) => {
     try {
       const response = await axios.post(
-        `${endPoint}/${routineId}/${exerciseId}/${sequenceOrder}`
+        `${endPoint}/${routineId}/${exerciseId}/${sequenceOrder}?username=${username}`
       );
       return response.data;
     } catch (error) {
