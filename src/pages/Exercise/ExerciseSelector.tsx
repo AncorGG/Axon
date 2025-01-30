@@ -1,20 +1,25 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { BsPencil, BsPlus, BsTrash, BsArrowRepeat } from "react-icons/bs";
 import Card from "../../components/displays/card/Card";
 import Navbar from "../../components/navigation/navbar/Navbar";
-import { useNavigate } from "react-router-dom";
-import { Exercise } from "../../../public/models/ExerciseListType";
-import { Routine } from "../../../public/models/RoutineListType";
 import HorizontalNavbar from "../../components/navigation/navbar/HorizontalNavbar";
 import ExtraDisplay from "../../components/displays/extra-display/ExtraDisplay";
 import Return from "../../components/navigation/return/Return";
-import { BsPencil, BsPlus, BsTrash } from "react-icons/bs";
-import "./ExerciseSelector.css";
+import LostConnection from "../../components/displays/lost-connection/LostConnection";
+import { Exercise } from "../../../public/models/ExerciseListType";
+import { Routine } from "../../../public/models/RoutineListType";
 import { RoutineService } from "../../services/routine.service";
 import { ExerciseService } from "../../services/exercise.service";
+import "./ExerciseSelector.css";
 
 function ExerciseSelector() {
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [routines, setRoutines] = useState<Routine[]>([]);
+  const [loadingExercises, setLoadingExercises] = useState(true);
+  const [loadingRoutines, setLoadingRoutines] = useState(true);
+  const [errorExercises, setErrorExercises] = useState(false);
+  const [errorRoutines, setErrorRoutines] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,25 +28,35 @@ function ExerciseSelector() {
   }, []);
 
   const fetchExercises = async () => {
+    setLoadingExercises(true);
     try {
       const data = await ExerciseService.getExercises();
       setExercises(data);
+      setErrorExercises(false);
     } catch (error) {
-      console.error("Error fetching exercises:", error);
+      setErrorExercises(true);
+    } finally {
+      setLoadingExercises(false);
     }
   };
 
   const fetchRoutines = async () => {
+    setLoadingRoutines(true);
     try {
       const data = await RoutineService.getRoutines();
       setRoutines(data);
+      setErrorRoutines(false);
     } catch (error) {
-      console.error("Error fetching routines:", error);
+      setErrorRoutines(true);
+    } finally {
+      setLoadingRoutines(false);
     }
   };
 
   const handleCardClick = (exercise: Exercise) => {
-    navigate(`/exercise/test/${exercise.id_exercise}`, { state: { exercise } });
+    navigate(`/exercise/test/${exercise.id_exercise}`, {
+      state: { exercise },
+    });
   };
 
   const handleDeleteRoutine = async (id: number) => {
@@ -60,54 +75,75 @@ function ExerciseSelector() {
         <Return />
         <div className="hompage-card-list">
           <div className="exercise-routine-container">
-            <p className="exercise-routine-title">Your Routines</p>
-            <div className="exercise-routine-list">
-              {routines.map((routine) => (
-                <div key={routine.id_routine} className="exercise-routine">
-                  <p className="exercise-routine-text">
-                    {routine.routine_name}
-                  </p>
-                  <div className="exercise-routine-icons">
-                    <BsPencil
-                      size={20}
-                      color="#b1590b"
-                      onClick={() =>
-                        navigate(`/exercise/routines/${routine.id_routine}`)
-                      }
-                    />
-                    <BsTrash
-                      size={20}
-                      color="#ff0e0e"
-                      onClick={() => {
-                        if (routine.id_routine !== undefined) {
-                          handleDeleteRoutine(routine.id_routine);
-                        } else {
-                          console.error("Routine ID is undefined");
-                        }
-                      }}
-                    />
+            {loadingRoutines ? (
+              <div className="loading-container">
+                <BsArrowRepeat className="loading-icon" />
+                <p>Loading routines...</p>
+              </div>
+            ) : errorRoutines ? (
+              <LostConnection text="Failed to load routines." />
+            ) : (
+              <>
+                <p className="exercise-routine-title">Your Routines</p>
+                <div className="exercise-routine-list">
+                  {routines.map((routine) => (
+                    <div key={routine.id_routine} className="exercise-routine">
+                      <p className="exercise-routine-text">
+                        {routine.routine_name}
+                      </p>
+                      <div className="exercise-routine-icons">
+                        <BsPencil
+                          size={20}
+                          color="#b1590b"
+                          onClick={() =>
+                            navigate(`/exercise/routines/${routine.id_routine}`)
+                          }
+                        />
+                        <BsTrash
+                          size={20}
+                          color="#ff0e0e"
+                          onClick={() => {
+                            if (routine.id_routine !== undefined) {
+                              handleDeleteRoutine(routine.id_routine);
+                            } else {
+                              console.error("Routine ID is undefined");
+                            }
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                  <div
+                    className="exercise-routine"
+                    onClick={() => navigate(`/exercise/routines/new`)}
+                  >
+                    <div className="exercise-routine-add">
+                      <BsPlus size={40} />
+                    </div>
                   </div>
                 </div>
-              ))}
-              <div
-                className="exercise-routine"
-                onClick={() => navigate(`/exercise/routines/new`)}
-              >
-                <div className="exercise-routine-add">
-                  <BsPlus size={40} />
-                </div>
-              </div>
-            </div>
+              </>
+            )}
           </div>
-          {exercises.map((exercise) => (
-            <Card
-              key={exercise.id_exercise}
-              image="exercise.png"
-              alt={`Exercise ${exercise.difficulty} Image`}
-              text={`${exercise.exercise_name}`}
-              onClick={() => handleCardClick(exercise)}
-            />
-          ))}
+
+          {loadingExercises ? (
+            <div className="loading-container">
+              <BsArrowRepeat className="loading-icon" />
+              <p>Loading exercises...</p>
+            </div>
+          ) : errorExercises ? (
+            <LostConnection text="Failed to load exercises." />
+          ) : (
+            exercises.map((exercise) => (
+              <Card
+                key={exercise.id_exercise}
+                image="exercise.png"
+                alt={`Exercise ${exercise.difficulty} Image`}
+                text={`${exercise.exercise_name}`}
+                onClick={() => handleCardClick(exercise)}
+              />
+            ))
+          )}
         </div>
       </div>
       <ExtraDisplay />

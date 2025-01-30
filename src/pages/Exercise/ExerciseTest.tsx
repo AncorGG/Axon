@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Exercise } from "../../../public/models/ExerciseListType";
 import "./ExerciseTest.css";
 import { ExerciseService } from "../../services/exercise.service";
+import LostConnection from "../../components/displays/lost-connection/LostConnection";
 
 function ExerciseTest() {
   const [mode, setMode] = useState<"read" | "write" | "review">("read");
@@ -61,9 +62,9 @@ function ExerciseTest() {
 
   if (!exercise) {
     return (
-      <div>
+      <div className="test-container">
         <Header />
-        <div>Loading exercise...</div>
+        <LostConnection />
         <Navbar />
       </div>
     );
