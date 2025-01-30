@@ -3,7 +3,7 @@ import { Badge } from "../../public/models/BadgeListType";
 
 const endPoint = "http://localhost:8080/api/badges";
 
-const username = "testAdmin";
+const username = sessionStorage.getItem("username");
 
 export const BadgeService = {
   getBadges: async () => {

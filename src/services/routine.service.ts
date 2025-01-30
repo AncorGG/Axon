@@ -3,7 +3,7 @@ import { Routine } from "../../public/models/RoutineListType";
 
 const endPoint = "http://localhost:8080/api/routines";
 
-const username = "testAdmin";
+const username = sessionStorage.getItem("username");
 
 export const RoutineService = {
   getRoutines: async () => {

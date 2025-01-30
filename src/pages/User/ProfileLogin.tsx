@@ -1,4 +1,4 @@
-import { BsEnvelope, BsEye, BsLock } from "react-icons/bs";
+import { BsEye, BsLock, BsPerson } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { FormEvent, useState } from "react";
 import Header from "../../components/displays/header/Header";
@@ -49,7 +49,7 @@ function ProfileLogin() {
           <form onSubmit={handleSignIn} className="log-form">
             <p className="form-label">Usename</p>
             <div className="form-input-container">
-              <BsEnvelope size={20} />
+              <BsPerson size={20} />
               <input
                 type="text"
                 placeholder="Value"

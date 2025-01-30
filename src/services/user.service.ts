@@ -7,6 +7,7 @@ export const register = async (username: any, email: any, password: any) => {
     const response = await axios.post(`${endPoint}/register`, null, {
       params: { username, email, password },
     });
+    sessionStorage.setItem("username", username);
     return response.data;
   } catch (error) {
     console.error("Error en el registro:", error);
@@ -19,6 +20,7 @@ export const login = async (username: any, password: any) => {
     const response = await axios.post(`${endPoint}/login`, null, {
       params: { username, password },
     });
+    sessionStorage.setItem("username", username);
     return response.data;
   } catch (error) {
     console.error("Error en el login:", error);

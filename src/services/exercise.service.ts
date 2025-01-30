@@ -3,7 +3,7 @@ import { Exercise } from "../../public/models/ExerciseListType";
 
 const endPoint = "http://localhost:8080/api/exercises";
 
-const username = "testAdmin";
+const username = sessionStorage.getItem("username");
 
 export const ExerciseService = {
   getExercises: async () => {
