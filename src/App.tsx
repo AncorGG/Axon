@@ -10,22 +10,86 @@ import ProfileLogin from "./pages/User/ProfileLogin";
 import ProfileRegister from "./pages/User/ProfileRegister";
 import ExerciseTest from "./pages/Exercise/ExerciseTest";
 import { Routines } from "./pages/Routines/Routines";
+import ProtectedRoute from "./components/navigation/protected_route/ProtectedRoute";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="*" element={<HomePage />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/exercise" element={<ExerciseSelector />} />
-        <Route path="/exercise/test/:id_exercise" element={<ExerciseTest />} />
-        <Route path="/exercise/routines/:id_routine" element={<Routines />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/milestones" element={<Milestones />} />
-        <Route path="/milestones/goals" element={<Badges />} />
-        <Route path="/user" element={<Profile />} />
+        <Route
+          path="*"
+          element={
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/user/login" element={<ProfileLogin />} />
         <Route path="/user/register" element={<ProfileRegister />} />
+        <Route
+          path="/exercise"
+          element={
+            <ProtectedRoute>
+              <ExerciseSelector />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/exercise/test/:id_exercise"
+          element={
+            <ProtectedRoute>
+              <ExerciseTest />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/exercise/routines/:id_routine"
+          element={
+            <ProtectedRoute>
+              <Routines />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <ProtectedRoute>
+              <Settings />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/milestones"
+          element={
+            <ProtectedRoute>
+              <Milestones />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/milestones/goals"
+          element={
+            <ProtectedRoute>
+              <Badges />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
