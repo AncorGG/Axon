@@ -1,4 +1,5 @@
 import {
+  BsArrowRepeat,
   BsArrowReturnLeft,
   BsEnvelope,
   BsEye,
@@ -6,10 +7,16 @@ import {
   BsPerson,
 } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Header from "../../components/displays/header/Header";
 import "./ProfileRegister.css";
-import { register } from "../../services/user.service";
+import { checkBackendConnection, register } from "../../services/user.service";
+import LostConnection from "../../components/displays/lost-connection/LostConnection";
+
+type ApiError = {
+  message: string;
+  field: string;
+};
 
 function ProfileRegister() {
   const navigate = useNavigate();
@@ -19,6 +26,23 @@ function ProfileRegister() {
   const [userError, setUserError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [connectionError, setConnectionError] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const verifyConnection = async () => {
+      try {
+        const isConnected = await checkBackendConnection();
+        setConnectionError(!isConnected);
+      } catch (error) {
+        setConnectionError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    verifyConnection();
+  }, []);
 
   const handleRegister = async () => {
     try {
@@ -27,6 +51,18 @@ function ProfileRegister() {
       navigate("/user");
     } catch (error) {
       postMessage("Error en el registro");
+
+      const err = error as ApiError;
+
+      if (err?.field === "username") {
+        setUserError(err.message);
+      } else if (err?.field === "email") {
+        setEmailError(err.message);
+      } else {
+        setUserError("An unexpected error occurred");
+        setEmailError("An unexpected error occurred");
+        setPasswordError("An unexpected error occurred");
+      }
     }
   };
 
@@ -56,6 +92,35 @@ function ProfileRegister() {
     setPasswordError("");
     handleRegister();
   };
+
+  if (loading) {
+    return (
+      <div className="user-form-main-container">
+        <Header />
+        <div className="login-container">
+          <p className="form-title">Register</p>
+          <div className="form-container">
+            <div className="loading-container">
+              <BsArrowRepeat className="loading-icon" />
+              <p>Cargando...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (connectionError) {
+    return (
+      <div className="user-form-main-container">
+        <Header />
+        <div className="login-container">
+          <p className="form-title">Register</p>
+          <LostConnection />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="user-form-main-container">
