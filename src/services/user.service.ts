@@ -1,6 +1,8 @@
 import axios, { AxiosError } from "axios";
+import { User } from "../../public/models/User";
 
 const endPoint = "http://localhost:8082";
+const databaseEndPoint = "http://localhost:8080/api/user";
 
 export const register = async (
   username: string,
@@ -42,5 +44,16 @@ export const checkBackendConnection = async (): Promise<boolean> => {
     return true;
   } catch (error) {
     return false;
+  }
+};
+
+export const getUserByUsername = async (username: string) => {
+  try {
+    const response = await axios.get<User>(
+      `${databaseEndPoint}/${username}?username=${username}`
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
   }
 };

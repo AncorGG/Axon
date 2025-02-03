@@ -12,6 +12,7 @@ import { Routine } from "../../../public/models/RoutineListType";
 import { RoutineService } from "../../services/routine.service";
 import { ExerciseService } from "../../services/exercise.service";
 import "./ExerciseSelector.css";
+import { getUserByUsername } from "../../services/user.service";
 
 function ExerciseSelector() {
   const [exercises, setExercises] = useState<Exercise[]>([]);
@@ -42,14 +43,24 @@ function ExerciseSelector() {
 
   const fetchRoutines = async () => {
     setLoadingRoutines(true);
-    try {
-      const data = await RoutineService.getRoutines();
-      setRoutines(data);
-      setErrorRoutines(false);
-    } catch (error) {
-      setErrorRoutines(true);
-    } finally {
-      setLoadingRoutines(false);
+    const username = sessionStorage.getItem("username");
+    if (username) {
+      try {
+        const user = await getUserByUsername(username);
+
+        if (user?.id) {
+          const data = await RoutineService.getRoutinesByUserId(user.id);
+
+          setRoutines(data);
+          setErrorRoutines(false);
+        } else {
+          setErrorRoutines(true);
+        }
+      } catch (error) {
+        setErrorRoutines(true);
+      } finally {
+        setLoadingRoutines(false);
+      }
     }
   };
 

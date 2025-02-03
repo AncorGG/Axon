@@ -35,10 +35,6 @@ function ProfileLogin() {
     verifyConnection();
   }, []);
 
-  const handleRegister = () => {
-    navigate("/user/register");
-  };
-
   useEffect(() => {}, [userError, passwordError]);
 
   const handleSignIn = async () => {

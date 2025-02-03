@@ -3,13 +3,11 @@ import { Routine } from "../../public/models/RoutineListType";
 
 const endPoint = "http://localhost:8080/api/routines";
 
-const username = sessionStorage.getItem("username");
-
 export const RoutineService = {
   getRoutines: async () => {
     try {
       const response = await axios.get<Routine[]>(
-        `${endPoint}?username=${username}`
+        `${endPoint}?username=${sessionStorage.getItem("username")}`
       );
       return response.data;
     } catch (error) {
@@ -20,7 +18,20 @@ export const RoutineService = {
   getRoutineById: async (id: number) => {
     try {
       const response = await axios.get<Routine>(
-        `${endPoint}/${id}?username=${username}`
+        `${endPoint}/${id}?username=${sessionStorage.getItem("username")}`
+      );
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  getRoutinesByUserId: async (userId: number) => {
+    try {
+      const response = await axios.get<Routine[]>(
+        `${endPoint}/user/${userId}?username=${sessionStorage.getItem(
+          "username"
+        )}`
       );
       return response.data;
     } catch (error) {
@@ -31,7 +42,7 @@ export const RoutineService = {
   addRoutine: async (routine: Routine) => {
     try {
       const response = await axios.post<Routine>(
-        `${endPoint}?username=${username}`,
+        `${endPoint}?username=${sessionStorage.getItem("username")}`,
         routine
       );
       return response.data;
@@ -43,7 +54,7 @@ export const RoutineService = {
   updateRoutine: async (id: number, routine: Routine) => {
     try {
       const response = await axios.put<Routine>(
-        `${endPoint}/${id}?username=${username}`,
+        `${endPoint}/${id}?username=${sessionStorage.getItem("username")}`,
         routine
       );
       return response.data;
@@ -54,7 +65,9 @@ export const RoutineService = {
 
   deleteRoutine: async (id: number) => {
     try {
-      await axios.delete(`${endPoint}/${id}?username=${username}`);
+      await axios.delete(
+        `${endPoint}/${id}?username=${sessionStorage.getItem("username")}`
+      );
     } catch (error) {
       throw error;
     }

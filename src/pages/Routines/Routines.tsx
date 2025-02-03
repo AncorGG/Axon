@@ -18,6 +18,7 @@ import { RoutineService } from "../../services/routine.service";
 import { Exercise } from "../../../public/models/ExerciseListType";
 import { RoutineExerciseService } from "../../services/routine.exercise.service";
 import { ExerciseService } from "../../services/exercise.service";
+import { getUserByUsername } from "../../services/user.service";
 
 interface RoutineContentProps {
   title: string;
@@ -49,6 +50,21 @@ const RoutineContent = ({
       fetchExercises();
     }
   }, []);
+
+  const getUserId = async () => {
+    try {
+      const username = sessionStorage.getItem("username");
+      if (!username) {
+        throw new Error("No username found in sessionStorage");
+      }
+      const user = await getUserByUsername(username);
+      const userId = user.id;
+      return userId;
+    } catch (error) {
+      console.error("Error getting user ID:", error);
+      return null;
+    }
+  };
 
   const fetchExercises = async () => {
     if (id_routine) {
@@ -124,72 +140,90 @@ const RoutineContent = ({
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    if (isNew) {
-      const newRoutine = {
-        routine_name: title,
-        description: description,
-      };
+    try {
+      const userId = await getUserId();
+      console.log("User ID:", userId);
 
-      try {
-        const createRoutine = await RoutineService.addRoutine(newRoutine);
-
-        if (createRoutine && createRoutine.id_routine) {
-          const newRoutineId = createRoutine.id_routine;
-          await addAllNewExercises(newRoutineId, tempExercises);
-        } else {
-          console.error("Failed to get the ID of the newly created routine.");
-        }
-      } catch (error) {
-        console.error("Error creating new routine:", error);
+      if (!userId) {
+        console.error("No user ID found!");
+        return;
       }
-    } else {
-      if (id_routine) {
-        const id = Number(id_routine);
-        const updatedRoutine = {
-          id_routine: id,
+
+      if (isNew) {
+        const newRoutine = {
           routine_name: title,
           description: description,
-          id_user: 1,
+          user: { id: userId },
         };
+        console.log("Creating new routine:", newRoutine);
 
-        // Update Routine
         try {
-          await RoutineService.updateRoutine(id, updatedRoutine);
-        } catch (error) {
-          console.error("Error updating routine:", error);
-        }
+          const createRoutine = await RoutineService.addRoutine(newRoutine);
 
-        // Update RoutineExercise
-        try {
-          const existingRoutineExercises = await getExistingRoutineExercises(
-            id
-          );
-
-          if (existingRoutineExercises && existingRoutineExercises.length > 0) {
-            const existingExerciseIds = existingRoutineExercises.map(
-              (rel) => rel.exercise.id_exercise
-            );
-
-            // Find exercises to delete
-            const exercisesToDelete = existingExerciseIds.filter(
-              (id_exercise) =>
-                !tempExercises.some(
-                  (exercise) => exercise.id_exercise === id_exercise
-                )
-            );
-
-            for (const id_exercise of exercisesToDelete) {
-              await handleDeleteExercise(id_exercise);
-            }
-
-            await addNewExercises(id, existingRoutineExercises, tempExercises);
+          if (createRoutine && createRoutine.id_routine) {
+            const newRoutineId = createRoutine.id_routine;
+            await addAllNewExercises(newRoutineId, tempExercises);
           } else {
-            await addAllNewExercises(id, tempExercises);
+            console.error("Failed to get the ID of the newly created routine.");
           }
         } catch (error) {
-          console.error("Error managing routine exercises:", error);
+          console.error("Error creating new routine:", error);
+        }
+      } else {
+        if (id_routine) {
+          const id = Number(id_routine);
+          const updatedRoutine = {
+            id_routine: id,
+            routine_name: title,
+            description: description,
+            user: { id: userId },
+          };
+
+          try {
+            await RoutineService.updateRoutine(id, updatedRoutine);
+          } catch (error) {
+            console.error("Error updating routine:", error);
+          }
+
+          try {
+            const existingRoutineExercises = await getExistingRoutineExercises(
+              id
+            );
+
+            if (
+              existingRoutineExercises &&
+              existingRoutineExercises.length > 0
+            ) {
+              const existingExerciseIds = existingRoutineExercises.map(
+                (rel) => rel.exercise.id_exercise
+              );
+
+              const exercisesToDelete = existingExerciseIds.filter(
+                (id_exercise) =>
+                  !tempExercises.some(
+                    (exercise) => exercise.id_exercise === id_exercise
+                  )
+              );
+
+              for (const id_exercise of exercisesToDelete) {
+                await handleDeleteExercise(id_exercise);
+              }
+
+              await addNewExercises(
+                id,
+                existingRoutineExercises,
+                tempExercises
+              );
+            } else {
+              await addAllNewExercises(id, tempExercises);
+            }
+          } catch (error) {
+            console.error("Error managing routine exercises:", error);
+          }
         }
       }
+    } catch (error) {
+      console.error("Error handling submit:", error);
     }
   };
 
@@ -233,7 +267,7 @@ const RoutineContent = ({
         <Return />
         <div className="routine-container">
           <div className="routine-info-container">
-            <form onSubmit={handleSubmit}>
+            <form>
               <div className="routine-info-header">
                 {" "}
                 <input
