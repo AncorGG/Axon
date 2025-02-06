@@ -51,7 +51,8 @@ La aplicación ofrece diversas funcionalidades, incluyendo un menú de inicio qu
 
 ---
 
-## 2. Diagramas y Modelo de Datos
+<details>
+  <summary>2. Diagramas y Modelo de Datos</summary>
 
 - **Campos y Relaciones**
 
@@ -309,6 +310,8 @@ Clase embebida (`@Embeddable`) que define `idUser` y `idExercise` como clave pri
 Entidad simple mapeada a la tabla `badge`, con un identificador autogenerado y atributos básicos (`name`, `description`, `criteria`). No tiene relaciones directas en el código mostrado.
 
 ![Badge](/public/images/doc/Badge.png)
+
+</details>
 
 ## 3. Requisitos de Usuario
 
@@ -585,5 +588,4 @@ El desarrollo de este proyecto ha sido una experiencia enriquecedora, permitién
 
 ## 15. Autores
 
-[Ancor García Guedes](https://github.com/AncorGG)
-[Jorge Gabriel Arcalá Gonzalez](https://github.com/erizomovil)
+- [Ancor García Guedes](https://github.com/AncorGG) -[Jorge Gabriel Arcalá Gonzalez](https://github.com/erizomovil)
