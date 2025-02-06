@@ -51,8 +51,10 @@ La aplicación ofrece diversas funcionalidades, incluyendo un menú de inicio qu
 
 ---
 
+## 2. Diagramas y Modelo de Datos
+
 <details>
-  <summary>2. Diagramas y Modelo de Datos</summary>
+  <summary>Lista de campos, relaciones y sus correspondientes modelos que forman la app</summary>
 
 - **Campos y Relaciones**
 
