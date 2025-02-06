@@ -235,13 +235,13 @@ Almacena la configuración personalizada de cada usuario.
 
 Desde el punto de vista del modelo E/R, el sistema consiste en varias entidades clave: Exercise, Routine, Users, Milestones, Badges, y Configuration. Las relaciones entre ellas se representan con vínculos como RoutineExercise, que conecta rutinas y ejercicios, y UserExercise, que asocia a los usuarios con ejercicios completados. Además, existen asociaciones entre Users y Milestones a través de la entidad UserMilestone, así como entre Users y Badges mediante la relación UserBadge.
 
-<!-- INSERTAR IMAGEN -->
+![Diagrama Modelo Entidad - Relación](/public/images/doc/BBDDAxon.jpeg)
 
 - **Modelo UML**
 
 En el modelo UML, las entidades se representarían como clases con sus atributos listados dentro de ellas. Por ejemplo, la clase Exercise tiene atributos como id_exercise, exercise_name, difficulty, speed, y experience. Las relaciones entre las clases serían representadas con asociaciones, como la relación RoutineExercise que une Exercise y Routine. Las asociaciones pueden ser con multiplicidad, indicando, por ejemplo, que un User puede tener muchos Milestones a través de la clase de relación UserMilestone.
 
-<!-- INSERTAR IMAGEN -->
+![Diagrama UML](/public/images/doc/UMLAxon.jpeg)
 
 - **Modelo Relacional**
 
@@ -266,49 +266,49 @@ Las tablas UserExercise, UserMilestone, UserBadge, y Configuration también cont
 
 Entidad JPA mapeada a la tabla `exercises`. Su identificador (`id_exercise`) se genera automáticamente con `GenerationType.IDENTITY`. Define atributos simples como `exercise_name`, `difficulty`, `speed` y `experience`, todos ellos mapeados con `@Column`.
 
-<!-- INSERTAR IMAGEN -->
+![Exercise](/public/images/doc/Exercise.png)
 
 ### Routine
 
 Entidad JPA para la tabla `routines`. Utiliza `@CreationTimestamp` en `creation_date` para generar automáticamente la fecha de creación. La relación con `User` se establece con `@ManyToOne`, y `@JoinColumn` define la clave foránea `id_user`. Usa `@OnDelete(action = OnDeleteAction.CASCADE)`, eliminando la rutina si el usuario asociado es eliminado.
 
-<!-- INSERTAR IMAGEN -->
+![Routine](/public/images/doc/Routine.png)
 
 ### RoutineExercise
 
 Entidad intermedia que usa una clave compuesta (`@EmbeddedId`), necesaria para la relación muchos a muchos entre `Routine` y `Exercise` con datos adicionales (`sequence_order`). Usa `@MapsId` para referenciar los identificadores de `Routine` y `Exercise` dentro de `RoutineExerciseKey`.
 
-<!-- INSERTAR IMAGEN -->
+![RoutineExercise](/public/images/doc/RoutineExercise.png)
 
 ### RoutineExerciseKey
 
 Clase embebida (`@Embeddable`) que define la clave primaria compuesta con `idRoutine` e `idExercise`. Implementa `equals` y `hashCode` para garantizar la correcta comparación y manipulación en colecciones y consultas.
 
-<!-- INSERTAR IMAGEN -->
+![RoutineExerciseKey](/public/images/doc/RoutineExerciseKey.png)
 
 ### User
 
 Entidad que representa la tabla `user`, con atributos como `username`, `email`, `level`, `experience`, `hashedPassword` y `token` para autenticación. `@Column(unique = true)` en `username` y `email` garantiza que no haya duplicados.
 
-<!-- INSERTAR IMAGEN -->
+![User](/public/images/doc/User.png)
 
 ### UserExercise
 
 Entidad intermedia que usa `@EmbeddedId` para gestionar la relación entre `User` y `Exercise`. Usa `@MapsId` en las relaciones con `User` y `Exercise`, lo que permite que los identificadores de la clave primaria compuesta sean usados directamente.
 
-<!-- INSERTAR IMAGEN -->
+![UserExercise](/public/images/doc/UserExercise.png)
 
 ### UserExerciseKey
 
 Clase embebida (`@Embeddable`) que define `idUser` y `idExercise` como clave primaria compuesta. Implementa `Serializable` y sobrescribe `equals` y `hashCode` para asegurar su correcta manipulación en Hibernate.
 
-<!-- INSERTAR IMAGEN -->
+![UserExerciseKey](/public/images/doc/UserExerciseKey.png)
 
 ### Badge
 
 Entidad simple mapeada a la tabla `badge`, con un identificador autogenerado y atributos básicos (`name`, `description`, `criteria`). No tiene relaciones directas en el código mostrado.
 
-<!-- INSERTAR IMAGEN -->
+![Badge](/public/images/doc/Badge.png)
 
 ## 3. Requisitos de Usuario
 
@@ -348,7 +348,7 @@ Para ejecutar el proyecto en un entorno local, se requieren las siguientes herra
 
 En principioo, Axon solo contará con la vista de usuario, podria ser interesante en algun futuro tener una vista de administrador, pero en principio el usuario será el que modifique todo lo que sea necesario en el sistema.
 
-<!-- Incluir los casos de uso iniciales del sistema -->
+![Diagrama Casos de Uso](/public/images/doc/DiagramaCasoDeUso.png)
 
 ---
 
