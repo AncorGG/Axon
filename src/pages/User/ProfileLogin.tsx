@@ -35,7 +35,12 @@ function ProfileLogin() {
     verifyConnection();
   }, []);
 
-  useEffect(() => {}, [userError, passwordError]);
+  useEffect(() => {
+    if (sessionStorage.getItem("login") === "expired") {
+      setUserError("Token Expired");
+      sessionStorage.removeItem("login");
+    }
+  }, [userError, passwordError]);
 
   const handleSignIn = async () => {
     try {
@@ -44,9 +49,7 @@ function ProfileLogin() {
       navigate("/user");
     } catch (error) {
       postMessage("Error en el login");
-
       const err = error as ApiError;
-
       if (err.field === "username") {
         setUserError(err.message);
       } else if (err.field === "password") {

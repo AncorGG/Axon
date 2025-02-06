@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ExerciseResponse } from "../../public/models/ExerciseListType";
+import handleTokenExpiration from "../components/navigation/token_expired/TokenExpired";
 
 const endPoint = "http://localhost:8080/api/routine-exercise";
 
@@ -11,6 +12,7 @@ export const RoutineExerciseService = {
       );
       return response.data;
     } catch (error) {
+      await handleTokenExpiration();
       return null;
     }
   },
@@ -28,6 +30,7 @@ export const RoutineExerciseService = {
       );
       return response.data;
     } catch (error) {
+      await handleTokenExpiration();
       console.error("Error adding exercise to routine:", error);
       throw error;
     }

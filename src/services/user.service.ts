@@ -1,5 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { User } from "../../public/models/User";
+import handleTokenExpiration from "../components/navigation/token_expired/TokenExpired";
 
 const endPoint = "http://localhost:8082";
 const databaseEndPoint = "http://localhost:8080/api/user";
@@ -27,7 +28,7 @@ export const login = async (username: string, password: string) => {
     const response = await axios.post(`${endPoint}/login`, null, {
       params: { username, password },
     });
-
+    sessionStorage.removeItem("login");
     sessionStorage.setItem("username", username);
     return response.data;
   } catch (error) {
@@ -54,6 +55,7 @@ export const getUserByUsername = async (username: string) => {
     );
     return response.data;
   } catch (error) {
+    await handleTokenExpiration();
     throw error;
   }
 };

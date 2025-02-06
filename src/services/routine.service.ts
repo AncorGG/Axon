@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Routine } from "../../public/models/RoutineListType";
+import handleTokenExpiration from "../components/navigation/token_expired/TokenExpired";
 
 const endPoint = "http://localhost:8080/api/routines";
 
@@ -11,6 +12,7 @@ export const RoutineService = {
       );
       return response.data;
     } catch (error) {
+      await handleTokenExpiration();
       throw error;
     }
   },
@@ -22,6 +24,7 @@ export const RoutineService = {
       );
       return response.data;
     } catch (error) {
+      await handleTokenExpiration();
       throw error;
     }
   },
@@ -35,6 +38,7 @@ export const RoutineService = {
       );
       return response.data;
     } catch (error) {
+      await handleTokenExpiration();
       throw error;
     }
   },
@@ -47,6 +51,7 @@ export const RoutineService = {
       );
       return response.data;
     } catch (error) {
+      await handleTokenExpiration();
       throw error;
     }
   },
@@ -59,6 +64,7 @@ export const RoutineService = {
       );
       return response.data;
     } catch (error) {
+      await handleTokenExpiration();
       throw error;
     }
   },
@@ -69,6 +75,7 @@ export const RoutineService = {
         `${endPoint}/${id}?username=${sessionStorage.getItem("username")}`
       );
     } catch (error) {
+      await handleTokenExpiration();
       throw error;
     }
   },
