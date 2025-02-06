@@ -20,7 +20,12 @@ function HomePage() {
             nav("/exercise/test/2");
           }}
         />
-        <Card image="brain.jpg" alt="Brain Image" text="Help" />
+        <Card
+          image="brain.jpg"
+          alt="Brain Image"
+          text="Help"
+          href="/public/documentation/html/Overview.html"
+        />
         <Card image="stats.jpg" alt="Stats Image" text="Progress Overview" />
       </div>
       <ExtraDisplay />
