@@ -346,6 +346,8 @@ Para ejecutar el proyecto en un entorno local, se requieren las siguientes herra
 
 ## 4. Casos de Uso
 
+En principioo, Axon solo contará con la vista de usuario, podria ser interesante en algun futuro tener una vista de administrador, pero en principio el usuario será el que modifique todo lo que sea necesario en el sistema.
+
 <!-- Incluir los casos de uso iniciales del sistema -->
 
 ---
@@ -430,10 +432,9 @@ A continuación, se muestran algunas de las características aplicadas:
 
 ## 7. Manuales
 
-1. **Manual de instalación para desarrolladores** (servidor y cliente)
-2. **Manual de instalación para técnicos**
-3. **Manual de usuario final**
-4. **Ayuda en la App**
+1. [Manual de instalación](public/documentation/Axon-ManualdeInstalación.pdf.pdf)
+2. [Manual de usuario](public/documentation/Axon-ManualdeUsuario.pdf)
+3. [MDocumentación](public/documentation/Axon-ManualdeUsuario.pdf)
 
 ---
 
@@ -441,7 +442,7 @@ A continuación, se muestran algunas de las características aplicadas:
 
 ### Backend
 
-[Describir pruebas realizadas.]
+<!-- **************************************************************************** -->
 
 ### Frontend
 
@@ -546,22 +547,43 @@ it("generates a 4 digit sequence with non-repeating numbers", async () => {
 
 ## 12. Planificación
 
-[Describir la organización y planificación del desarrollo.]
+El desarrollo del proyecto se dividió en dos fases principales:
+
+1. **Fase de Planificación y Diseño:**
+
+   - Se utilizó Figma para diseñar la interfaz de usuario, asegurando una experiencia fluida e intuitiva.
+   - Se definieron los requisitos funcionales y técnicos del proyecto, estableciendo las bases para el desarrollo.
+   - Una vez aprobado el diseño, se procedió a la siguiente fase.
+
+2. **Fase de Desarrollo:**
+   - Se trabajó simultáneamente en el front-end y back-end para optimizar tiempos.
+   - El equipo utilizó GitHub Projects para asignar tareas, hacer seguimiento del progreso y mantener un flujo de trabajo ordenado.
+   - Se realizaron revisiones de código periódicas para garantizar calidad y coherencia en el desarrollo.
+   - Se llevaron a cabo pruebas continuas para detectar y corregir errores antes de la implementación final.
 
 ---
 
 ## 13. Conclusiones y Reflexiones
 
-[Auténticas opiniones sobre el desarrollo y resultados.]
+El desarrollo de este proyecto ha sido una experiencia enriquecedora, permitiéndonos mejorar nuestras habilidades tanto en la planificación como en la implementación de software. Algunos puntos clave incluyen:
+
+- La fase de diseño fue crucial para evitar problemas en el desarrollo y garantizar una buena experiencia de usuario.
+- El uso de herramientas como Figma y GitHub Projects ayudó a mantener el equipo organizado y alineado con los objetivos.
+- Enfrentamos desafíos técnicos en la integración de ciertos módulos, pero logramos superarlos mediante investigación y colaboración.
+- La implementación de buenas prácticas en el código y revisiones constantes fueron fundamentales para el éxito del proyecto.
 
 ---
 
 ## 14. Enlaces y Referencias
 
-[Lista de referencias y enlaces de interés.]
+- [Figma](https://www.figma.com/)
+- [GitHub Projects](https://github.com/features/project-management)
+- [React](https://react.dev/)
+- [Node.js](https://nodejs.org/)
 
 ---
 
-## 15. Anexos
+## 15. Autores
 
-[Opcional: incluir información adicional como modelos ERS, requisitos adicionales, etc.]
+[Ancor García Guedes](https://github.com/AncorGG)
+[Jorge Gabriel Arcalá Gonzalez](https://github.com/erizomovil)
