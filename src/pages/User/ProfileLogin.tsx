@@ -1,4 +1,10 @@
-import { BsArrowRepeat, BsEye, BsLock, BsPerson } from "react-icons/bs";
+import {
+  BsEyeSlash,
+  BsArrowRepeat,
+  BsEye,
+  BsLock,
+  BsPerson,
+} from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { FormEvent, useEffect, useState } from "react";
 import Header from "../../components/displays/header/Header";
@@ -19,6 +25,7 @@ function ProfileLogin() {
   const [passwordError, setPasswordError] = useState("");
   const [connectionError, setConnectionError] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [passVisibility, setPassVisibility] = useState(true);
 
   useEffect(() => {
     const verifyConnection = async () => {
@@ -80,6 +87,10 @@ function ProfileLogin() {
     handleSignIn();
   };
 
+  const handleVisibility = () => {
+    setPassVisibility((prevState) => !prevState);
+  };
+
   if (loading) {
     return (
       <div className="user-form-main-container">
@@ -132,13 +143,25 @@ function ProfileLogin() {
             <div className="form-input-container">
               <BsLock size={20} />
               <input
-                type="password"
+                type={passVisibility ? "password" : "text"}
                 placeholder="*********"
                 className="form-input"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <BsEye size={20} />
+              {passVisibility ? (
+                <BsEyeSlash
+                  size={20}
+                  onClick={handleVisibility}
+                  style={{ cursor: "pointer" }}
+                />
+              ) : (
+                <BsEye
+                  size={20}
+                  onClick={handleVisibility}
+                  style={{ cursor: "pointer" }}
+                />
+              )}
             </div>
             <span className="error-text">{passwordError}</span>
             <div className="form-button-container">
