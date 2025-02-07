@@ -3,6 +3,7 @@ import {
   BsArrowReturnLeft,
   BsEnvelope,
   BsEye,
+  BsEyeSlash,
   BsLock,
   BsPerson,
 } from "react-icons/bs";
@@ -28,6 +29,7 @@ function ProfileRegister() {
   const [passwordError, setPasswordError] = useState("");
   const [connectionError, setConnectionError] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [passVisibility, setPassVisibility] = useState(true);
 
   useEffect(() => {
     const verifyConnection = async () => {
@@ -91,6 +93,10 @@ function ProfileRegister() {
     }
     setPasswordError("");
     handleRegister();
+  };
+
+  const handleVisibility = () => {
+    setPassVisibility((prevState) => !prevState);
   };
 
   if (loading) {
@@ -160,13 +166,25 @@ function ProfileRegister() {
               <BsLock size={20} />
               <input
                 id="password"
-                type="text"
+                type={passVisibility ? "password" : "text"}
                 placeholder="*********"
                 className="form-input"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <BsEye size={20} />
+              {passVisibility ? (
+                <BsEyeSlash
+                  size={20}
+                  onClick={handleVisibility}
+                  style={{ cursor: "pointer" }}
+                />
+              ) : (
+                <BsEye
+                  size={20}
+                  onClick={handleVisibility}
+                  style={{ cursor: "pointer" }}
+                />
+              )}
             </div>
             <span className="error-text">{passwordError}</span>
             <div className="form-checkbox">

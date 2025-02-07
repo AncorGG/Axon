@@ -60,6 +60,7 @@
 .register-btn {
   color: var(--pure-white);
   background-color: var(--brown);
+  cursor: pointer;
 }
 
 .form-bottom-container {
