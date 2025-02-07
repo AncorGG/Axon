@@ -1,4 +1,4 @@
-import { BsBoxArrowRight } from "react-icons/bs";
+import { BsArrowRepeat, BsBoxArrowRight } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/navigation/navbar/Navbar";
 import Return from "../../components/navigation/return/Return";
@@ -16,6 +16,8 @@ function Profile() {
   const navitage = useNavigate();
   const [user, setUser] = useState<User>();
   const [loadingUser, setLoadingUser] = useState(true);
+  const [errorLoadingUser, setErrorLoadingUser] = useState(false);
+
   let username: string | null;
 
   function logOut() {
@@ -35,9 +37,10 @@ function Profile() {
       if (username) {
         const data = await getUserByUsername(username);
         setUser(data);
+        setErrorLoadingUser(false);
       }
     } catch (error) {
-      console.error(error);
+      setErrorLoadingUser(true);
     } finally {
       setLoadingUser(false);
     }
@@ -50,7 +53,12 @@ function Profile() {
         <Return />
         <div className="profile-container">
           {loadingUser ? (
-            <LostConnection />
+            <div className="loading-container">
+              <BsArrowRepeat className="loading-icon" />
+              <p>Loading user...</p>
+            </div>
+          ) : errorLoadingUser ? (
+            <LostConnection text="Failed to load user info" />
           ) : (
             <>
               <div className="profile-image-container">

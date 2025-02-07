@@ -5,13 +5,14 @@ import "./ExtraDisplay.css";
 import { getUserByUsername } from "../../../services/user.service";
 import { User } from "../../../../public/models/User";
 
-const username = sessionStorage.getItem("username");
-
 function ExtraDisplay() {
   const [user, setUser] = useState<User | undefined>(undefined);
   const [loadingUser, setLoadingUser] = useState(true);
 
+  let username: string | null;
+
   useEffect(() => {
+    username = sessionStorage.getItem("username");
     fetchUser();
   }, []);
 
