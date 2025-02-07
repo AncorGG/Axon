@@ -391,7 +391,7 @@ Axon es una aplicación diseñada para mejorar las capacidades cognitivas a trav
 - **Base de Datos**: Relacional, con tablas como **Users**, **Exercises**, **Routines**, etc.
 - **Frontend Web**: Desarrollado en **React** con diseño responsivo para dispositivos móviles y de escritorio.
 - **Seguridad**: Autenticación mediante **JWT** y almacenamiento de contraseñas con **bcrypt**.
-- **Pruebas**: Se utilizan **JUnit 5** para backend y **Jest** para frontend.
+- **Pruebas**: Se utiliza **Vitest** para frontend.
 
 ---
 
@@ -439,7 +439,8 @@ A continuación, se muestran algunas de las características aplicadas:
 
 1. [Manual de instalación](public/documentation/Axon-ManualdeInstalación.pdf.pdf)
 2. [Manual de usuario](public/documentation/Axon-ManualdeUsuario.pdf)
-3. [MDocumentación](public/documentation/Axon-ManualdeUsuario.pdf)
+3. [Documentación](public/documentation/Axon-ManualdeUsuario.pdf)
+4. **Guia de Ayuda**: Integrada dentro de la app.
 
 ---
 
@@ -590,4 +591,5 @@ El desarrollo de este proyecto ha sido una experiencia enriquecedora, permitién
 
 ## 15. Autores
 
-- [Ancor García Guedes](https://github.com/AncorGG) -[Jorge Gabriel Arcalá Gonzalez](https://github.com/erizomovil)
+- [Ancor García Guedes](https://github.com/AncorGG)
+- [Jorge Gabriel Arcalá Gonzalez](https://github.com/erizomovil)
