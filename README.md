@@ -351,7 +351,7 @@ Para ejecutar el proyecto en un entorno local, se requieren las siguientes herra
 
 ## 4. Casos de Uso
 
-En principioo, Axon solo contará con la vista de usuario, podria ser interesante en algun futuro tener una vista de administrador, pero en principio el usuario será el que modifique todo lo que sea necesario en el sistema.
+En principio, Axon solo contará con la vista de usuario, podria ser interesante en algun futuro tener una vista de administrador, pero en principio el usuario será el que modifique todo lo que sea necesario en el sistema.
 
 ![Diagrama Casos de Uso](/public/images/doc/DiagramaCasoDeUso.png)
 
