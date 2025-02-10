@@ -85,6 +85,9 @@ function ExerciseSelector() {
       <div className="scrolleable-container">
         <Return />
         <div className="hompage-card-list">
+          <div>
+            <button onClick={() => navigate(`/user/report`)}>Report</button>
+          </div>
           <div className="exercise-routine-container">
             {loadingRoutines ? (
               <div className="loading-container">
