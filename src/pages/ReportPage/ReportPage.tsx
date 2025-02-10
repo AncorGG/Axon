@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { RoutineService } from "../../services/routine.service";
 import { RoutineExerciseService } from "../../services/routine.exercise.service";
 import "./reportPage.css";
@@ -15,13 +15,16 @@ import {
 import { Routine } from "../../../public/models/RoutineListType";
 import { ExerciseResponse } from "../../../public/models/ExerciseListType";
 import { getUserByUsername } from "../../services/user.service";
+import { BsArrowRepeat } from "react-icons/bs";
+import LostConnection from "../../components/displays/lost-connection/LostConnection";
+import HorizontalNavbar from "../../components/navigation/navbar/HorizontalNavbar";
+import Return from "../../components/navigation/return/Return";
+import ExtraDisplay from "../../components/displays/extra-display/ExtraDisplay";
+import Navbar from "../../components/navigation/navbar/Navbar";
 
 const ReportPage = () => {
   const [routines, setRoutines] = useState<Routine[]>([]);
   const [exercises, setExercises] = useState<ExerciseResponse[]>([]);
-  const [exerciseCount, setExerciseCount] = useState<Map<string, number>>(
-    new Map()
-  );
   const [totalExercises, setTotalExercises] = useState<Map<string, number>>(
     new Map()
   );
@@ -69,17 +72,16 @@ const ReportPage = () => {
               countMap.set(name, (countMap.get(name) || 0) + 1);
             }
           });
-          setExerciseCount(countMap);
         } else {
-          setError("No se encontraron ejercicios para esta rutina");
+          setError("Exercises not found for the selected routine");
         }
         setLoading(false);
       } catch (err) {
-        setError("Error al obtener los ejercicios");
+        setError("Error fetching exercises");
         setLoading(false);
       }
     } else {
-      setError("ID de rutina no válido");
+      setError("Routine Id not valid");
       setLoading(false);
     }
   };
@@ -113,112 +115,135 @@ const ReportPage = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="loading-container">
+        <BsArrowRepeat className="loading-icon" />
+        <p>Loading report ...</p>
+      </div>
+    );
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return <LostConnection text={error} />;
   }
 
   return (
-    <div className="report-page">
-      <header className="report-header">
-        <h1>Reporte de Rutinas y Ejercicios</h1>
-        <p>
-          Este reporte muestra las rutinas de ejercicios y los ejercicios que
-          has añadido a cada una de ellas.
-        </p>
-      </header>
+    <div className="main-container">
+      <HorizontalNavbar />
+      <div className="scrolleable-container">
+        <Return />
+        <div className="hompage-card-list">
+          <header className="report-header">
+            <h1>Routine and exercise report</h1>
+            <p>
+              This report shows the routines and the exercises added to each one
+              of them.
+            </p>
+          </header>
 
-      <section className="report-content">
-        <div className="routines-list">
-          <h2>Mis Rutinas</h2>
-          <ul>
-            {routines.map((routine) => (
-              <li
-                key={routine.id_routine}
-                onClick={() => handleRoutineClick(routine.id_routine)}
-              >
-                {routine.routine_name}
-              </li>
-            ))}
-            <li onClick={handleTotalExercisesClick}>Total Ejercicios</li>
-          </ul>
-        </div>
-
-        {exercises.length > 0 && !isTotalExercises && (
-          <>
-            <div className="table-container">
-              <h3>Detalle de Ejercicios</h3>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Ejercicio</th>
-                    <th>Secuencia</th>
-                    <th>Dificultad</th>
-                    <th>Velocidad</th>
-                    <th>Experiencia</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {exercises.map((item, index) => (
-                    <tr key={index}>
-                      <td>{item.exercise?.exercise_name}</td>
-                      <td>{item.sequenceOrder}</td>
-                      <td>{item.exercise.difficulty}</td>
-                      <td>{item.exercise.speed}</td>
-                      <td>{item.exercise.experience}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </>
-        )}
-
-        {isTotalExercises && totalExercises.size > 0 && (
-          <>
-            <div className="chart-container">
-              <h2>Gráfico Total de Ejercicios</h2>
-              <ResponsiveContainer width="100%" height={400}>
-                <BarChart
-                  data={[...totalExercises].map(([name, count]) => ({
-                    exercise_name: name,
-                    count,
-                  }))}
+          <section className="report-content">
+            <h2>My Routines</h2>
+            <div className="routines-list">
+              {routines.map((routine) => (
+                <div
+                  className="routines-list-item"
+                  key={routine.id_routine}
+                  onClick={() => handleRoutineClick(routine.id_routine)}
                 >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="exercise_name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Bar dataKey="count" fill="#82ca9d" />
-                </BarChart>
-              </ResponsiveContainer>
+                  <p className="routines-list-text">{routine.routine_name}</p>
+                </div>
+              ))}
+              <div className="routines-list-item">
+                <p
+                  className="routines-list-text b"
+                  onClick={handleTotalExercisesClick}
+                >
+                  Total Ejercicios
+                </p>
+              </div>
             </div>
 
-            <div className="table-container">
-              <h3>Total de Ejercicios</h3>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Ejercicio</th>
-                    <th>Total en Todas las Rutinas</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[...totalExercises].map(([name, count], index) => (
-                    <tr key={index}>
-                      <td>{name}</td>
-                      <td>{count}</td>
+            {exercises.length > 0 && !isTotalExercises && (
+              <div className="table-container">
+                <h3>Exercise details</h3>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Exercise</th>
+                      <th>Sequence</th>
+                      <th>Difficulty</th>
+                      <th>Speed</th>
+                      <th>Experience</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </>
-        )}
-      </section>
+                  </thead>
+                  <tbody>
+                    {exercises.map((item, index) => (
+                      <tr key={index}>
+                        <td data-label="Exercise">
+                          {item.exercise?.exercise_name}
+                        </td>
+                        <td data-label="Sequence">{item.sequenceOrder}</td>
+                        <td data-label="Difficulty">
+                          {item.exercise.difficulty}
+                        </td>
+                        <td data-label="Speed">{item.exercise.speed}</td>
+                        <td data-label="Experience">
+                          {item.exercise.experience}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
+            {isTotalExercises && totalExercises.size > 0 && (
+              <div className="report-content">
+                <div className="chart-container">
+                  <h2>Exercise total graph</h2>
+                  <ResponsiveContainer width="100%" height={400}>
+                    <BarChart
+                      data={[...totalExercises].map(([name, count]) => ({
+                        exercise_name: name,
+                        count,
+                      }))}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="exercise_name" />
+                      <YAxis />
+                      <Tooltip />
+                      <Legend />
+                      <Bar dataKey="count" fill="#a6bd5b" />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+
+                <div className="table-container">
+                  <h3>Exercise summary</h3>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Exercise</th>
+                        <th>Ammount in routines</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {[...totalExercises].map(([name, count], index) => (
+                        <tr key={index}>
+                          <td data-label="Name">{name}</td>
+                          <td data-label="Ammount">{count}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+          </section>
+        </div>
+      </div>
+      <ExtraDisplay />
+      <Navbar />
     </div>
   );
 };
