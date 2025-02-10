@@ -11,6 +11,7 @@ import ProfileRegister from "./pages/User/ProfileRegister";
 import ExerciseTest from "./pages/Exercise/ExerciseTest";
 import { Routines } from "./pages/Routines/Routines";
 import ProtectedRoute from "./components/navigation/protected_route/ProtectedRoute";
+import ReportPage from "./pages/ReportPage/ReportPage";
 
 function App() {
   return (
@@ -90,6 +91,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/user/report" element={<ReportPage />} />
       </Routes>
     </BrowserRouter>
   );
