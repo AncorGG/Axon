@@ -15,12 +15,14 @@ import {
 import { Routine } from "../../../public/models/RoutineListType";
 import { ExerciseResponse } from "../../../public/models/ExerciseListType";
 import { getUserByUsername } from "../../services/user.service";
-import { BsArrowRepeat } from "react-icons/bs";
+import { BsArrowRepeat, BsFileEarmarkArrowDown } from "react-icons/bs";
 import LostConnection from "../../components/displays/lost-connection/LostConnection";
 import HorizontalNavbar from "../../components/navigation/navbar/HorizontalNavbar";
 import Return from "../../components/navigation/return/Return";
 import ExtraDisplay from "../../components/displays/extra-display/ExtraDisplay";
 import Navbar from "../../components/navigation/navbar/Navbar";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 const ReportPage = () => {
   const [routines, setRoutines] = useState<Routine[]>([]);
@@ -114,6 +116,36 @@ const ReportPage = () => {
     }
   };
 
+  const handlePrintPDF = () => {
+    const input = document.getElementById("report-content");
+    if (input) {
+      html2canvas(input, { scale: 1 }).then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
+        const pdf = new jsPDF("p", "mm", "a4");
+
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        const maxImgWidth = pageWidth - 20; //Márgenes
+        const imgHeight = (canvas.height * maxImgWidth) / canvas.width;
+
+        let finalWidth = maxImgWidth;
+        let finalHeight = imgHeight;
+
+        if (imgHeight > pageHeight - 20) {
+          const scaleFactor = (pageHeight - 20) / imgHeight;
+          finalWidth *= scaleFactor;
+          finalHeight *= scaleFactor;
+        }
+
+        const xOffset = (pageWidth - finalWidth) / 2;
+        const yOffset = 10;
+
+        pdf.addImage(imgData, "PNG", xOffset, yOffset, finalWidth, finalHeight);
+        pdf.save("reporte.pdf");
+      });
+    }
+  };
+
   if (loading) {
     return (
       <div className="loading-container">
@@ -141,7 +173,7 @@ const ReportPage = () => {
             </p>
           </header>
 
-          <section className="report-content">
+          <section id="report-container">
             <h2>My Routines</h2>
             <div className="routines-list">
               {routines.map((routine) => (
@@ -164,7 +196,7 @@ const ReportPage = () => {
             </div>
 
             {exercises.length > 0 && !isTotalExercises && (
-              <div className="table-container">
+              <div id="report-content" className="table-container">
                 <h3>Exercise details</h3>
                 <table>
                   <thead>
@@ -194,11 +226,14 @@ const ReportPage = () => {
                     ))}
                   </tbody>
                 </table>
+                <button className="report-btn" onClick={handlePrintPDF}>
+                  <BsFileEarmarkArrowDown /> Export to PDF
+                </button>
               </div>
             )}
 
             {isTotalExercises && totalExercises.size > 0 && (
-              <div className="report-content">
+              <div id="report-content">
                 <div className="chart-container">
                   <h2>Exercise total graph</h2>
                   <ResponsiveContainer width="100%" height={400}>
@@ -237,6 +272,9 @@ const ReportPage = () => {
                     </tbody>
                   </table>
                 </div>
+                <button className="report-btn" onClick={handlePrintPDF}>
+                  <BsFileEarmarkArrowDown /> Export to PDF
+                </button>
               </div>
             )}
           </section>

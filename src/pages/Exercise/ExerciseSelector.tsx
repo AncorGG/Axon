@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BsPencil, BsPlus, BsTrash, BsArrowRepeat } from "react-icons/bs";
+import {
+  BsPencil,
+  BsPlus,
+  BsTrash,
+  BsArrowRepeat,
+  BsFileEarmarkArrowDown,
+} from "react-icons/bs";
 import Card from "../../components/displays/card/Card";
 import Navbar from "../../components/navigation/navbar/Navbar";
 import HorizontalNavbar from "../../components/navigation/navbar/HorizontalNavbar";
@@ -85,9 +91,6 @@ function ExerciseSelector() {
       <div className="scrolleable-container">
         <Return />
         <div className="hompage-card-list">
-          <div>
-            <button onClick={() => navigate(`/user/report`)}>Report</button>
-          </div>
           <div className="exercise-routine-container">
             {loadingRoutines ? (
               <div className="loading-container">
@@ -136,6 +139,12 @@ function ExerciseSelector() {
                     </div>
                   </div>
                 </div>
+                <button
+                  className="report-btn"
+                  onClick={() => navigate(`/user/report`)}
+                >
+                  <BsFileEarmarkArrowDown /> Generate report
+                </button>
               </>
             )}
           </div>
