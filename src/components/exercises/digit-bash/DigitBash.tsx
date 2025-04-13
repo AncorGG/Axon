@@ -10,6 +10,7 @@ type DigitBashProps = {
   digitLength: number;
   digitSpeed: number;
   onReadComplete?: () => void;
+  onExperienceComplete?: (experience: number) => void;
 };
 
 function DigitBash(props: DigitBashProps) {
@@ -63,6 +64,14 @@ function DigitBash(props: DigitBashProps) {
       return () => clearInterval(interval);
     }
   }, [type, randomCode, digitSpeed, onReadComplete]);
+
+  useEffect(() => {
+    if (type === "review" && props.onExperienceComplete) {
+      const exp = calculateExperience();
+      props.onExperienceComplete(exp);
+    }
+  }, [type]);
+  
 
   //Handle input display
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -134,6 +143,11 @@ function DigitBash(props: DigitBashProps) {
     setAccuracy(accuracyPercent);
   };
 
+  const calculateExperience = () => {
+    const accuracyPercent = parseFloat(accuracy);
+    return Math.round((accuracyPercent / 100) * exp);
+  };
+
   function RenderContent() {
     switch (type) {
       case "read":
@@ -186,7 +200,7 @@ function DigitBash(props: DigitBashProps) {
           </div>
           <div className="digitb-exp review-container">
             <BsLightningCharge size={30} color="#ffb766" />
-            <p className="digitb-review-text">{exp} exp</p>
+            <p className="digitb-review-text">{calculateExperience()} exp</p>
           </div>
         </div>
       );

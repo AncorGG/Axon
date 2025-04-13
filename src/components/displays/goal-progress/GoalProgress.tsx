@@ -3,10 +3,11 @@ import "./GoalProgress.css";
 import { useEffect } from "react";
 
 type GoalProps = {
+  title: string;
   percentage: number;
 };
 
-function GoalProgress({ percentage }: GoalProps) {
+function GoalProgress({ title, percentage }: GoalProps) {
   useEffect(() => checkPercentage(), []);
 
   function checkPercentage() {
@@ -15,7 +16,7 @@ function GoalProgress({ percentage }: GoalProps) {
 
   return (
     <div className="goal-card">
-      <p className="goal-text">Take on Digit Bash Exercises</p>
+      <p className="goal-text">{title}</p>
       <div className="goal-progress-container">
         <Flex vertical gap="small" className="goal-flex-container">
           <Progress

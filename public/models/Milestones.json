@@ -1,0 +1,205 @@
+{
+    "goals": [
+      {
+        "id": 1,
+        "title": "Take on Digit Bash Exercises",
+        "progress": 70
+      },
+      {
+        "id": 2,
+        "title": "Complete React Project",
+        "progress": 100
+      },
+      {
+        "id": 3,
+        "title": "Read 5 Chapters of JavaScript Book",
+        "progress": 25
+      },
+      {
+        "id": 4,
+        "title": "Solve 5 LeetCode Problems",
+        "progress": 50
+      },
+      {
+        "id": 5,
+        "title": "Write a Blog Post",
+        "progress": 80
+      },
+      {
+        "id": 6,
+        "title": "Practice CSS Animations",
+        "progress": 40
+      },
+      {
+        "id": 7,
+        "title": "Complete 10 Sudoku Puzzles",
+        "progress": 30
+      },
+      {
+        "id": 8,
+        "title": "Master Multiplication Tables Up to 20",
+        "progress": 60
+      },
+      {
+        "id": 9,
+        "title": "Finish a Set of 5 Brain Teasers",
+        "progress": 50
+      },
+      {
+        "id": 10,
+        "title": "Achieve 100% in Memory Match Game",
+        "progress": 20
+      },
+      {
+        "id": 11,
+        "title": "Finish a Set of 5 Math Challenges",
+        "progress": 75
+      },
+      {
+        "id": 12,
+        "title": "Complete 3 Speed Typing Tests",
+        "progress": 40
+      },
+      {
+        "id": 13,
+        "title": "Solve 10 Riddles",
+        "progress": 80
+      },
+      {
+        "id": 14,
+        "title": "Play 5 Speed Math Games",
+        "progress": 60
+      },
+      {
+        "id": 15,
+        "title": "Finish 5 Pattern Recognition Challenges",
+        "progress": 50
+      },
+      {
+        "id": 16,
+        "title": "Complete a Memory Recall Exercise",
+        "progress": 70
+      },
+      {
+        "id": 17,
+        "title": "Complete 10 Logic Grid Puzzles",
+        "progress": 40
+      },
+      {
+        "id": 18,
+        "title": "Pass a Set of 5 Logical Reasoning Tests",
+        "progress": 65
+      },
+      {
+        "id": 19,
+        "title": "Solve 5 Word Puzzles",
+        "progress": 50
+      },
+      {
+        "id": 20,
+        "title": "Solve 5 Algorithmic Puzzles",
+        "progress": 30
+      },
+      {
+        "id": 21,
+        "title": "Complete a Series of Visual Perception Challenges",
+        "progress": 55
+      },
+      {
+        "id": 22,
+        "title": "Achieve High Score in Digit Memory Challenge",
+        "progress": 80
+      },
+      {
+        "id": 23,
+        "title": "Complete 3 Code Debugging Exercises",
+        "progress": 60
+      },
+      {
+        "id": 24,
+        "title": "Finish a Set of 5 Logical Deduction Tests",
+        "progress": 70
+      },
+      {
+        "id": 25,
+        "title": "Master 20 New Coding Concepts in Python",
+        "progress": 45
+      },
+      {
+        "id": 26,
+        "title": "Solve 10 Cryptography Challenges",
+        "progress": 50
+      },
+      {
+        "id": 27,
+        "title": "Complete 10 Number Series Challenges",
+        "progress": 35
+      },
+      {
+        "id": 28,
+        "title": "Pass 3 Advanced Memory Challenges",
+        "progress": 60
+      },
+      {
+        "id": 29,
+        "title": "Complete 10 Chess Puzzles",
+        "progress": 40
+      },
+      {
+        "id": 30,
+        "title": "Complete a Set of 5 Analytical Thinking Exercises",
+        "progress": 75
+      },
+      {
+        "id": 31,
+        "title": "Complete 5 Cognitive Speed Challenges",
+        "progress": 50
+      },
+      {
+        "id": 32,
+        "title": "Achieve Perfect Score in Sequence Recall Test",
+        "progress": 80
+      },
+      {
+        "id": 33,
+        "title": "Complete 10 Visual Memory Exercises",
+        "progress": 60
+      },
+      {
+        "id": 34,
+        "title": "Solve 5 Pattern Matching Puzzles",
+        "progress": 70
+      },
+      {
+        "id": 35,
+        "title": "Solve 10 Math Riddles",
+        "progress": 45
+      },
+      {
+        "id": 36,
+        "title": "Complete a Visual Spatial Intelligence Test",
+        "progress": 60
+      },
+      {
+        "id": 37,
+        "title": "Complete 10 Verbal Reasoning Tests",
+        "progress": 40
+      },
+      {
+        "id": 38,
+        "title": "Finish a Speed Reading Test",
+        "progress": 80
+      },
+      {
+        "id": 39,
+        "title": "Solve 10 Logic Riddles",
+        "progress": 70
+      },
+      {
+        "id": 40,
+        "title": "Finish 5 Speed Memory Games",
+        "progress": 55
+      }
+    ]
+  }
+  

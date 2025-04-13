@@ -59,3 +59,14 @@ export const getUserByUsername = async (username: string) => {
     throw error;
   }
 };
+
+export const updateUserExp = async (id: number, additionalExp: number, username: string) => {
+  try {
+    const response = await axios.put(`${databaseEndPoint}/${id}/exp?username=${username}`, { experience: additionalExp });
+    console.log("User experience updated:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating user experience:", error);
+    throw error;
+  }
+};
