@@ -437,9 +437,9 @@ A continuación, se muestran algunas de las características aplicadas:
 
 ## 7. Manuales
 
-1. [Manual de instalación](public/documentation/Axon-ManualdeInstalación.pdf.pdf)
+1. [Manual de instalación](public/documentation/Axon-ManualdeInstalación.pdf)
 2. [Manual de usuario](public/documentation/Axon-ManualdeUsuario.pdf)
-3. [Documentación](public/documentation/Axon-ManualdeUsuario.pdf)
+3. [Documentación](public/documentation/Axon-Documentacion.pdf)
 4. **Guia de Ayuda**: Integrada dentro de la app.
 
 ---

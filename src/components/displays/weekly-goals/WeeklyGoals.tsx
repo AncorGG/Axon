@@ -114,9 +114,6 @@ function WeeklyGoals() {
           <p>No goals available.</p>  // Mensaje por si no hay metas
         )}
       </div>
-      <button onClick={forceWeeklyChange} className="force-week-change-button">
-        Forzar cambio de semana
-      </button>
     </div>
   );
 }
