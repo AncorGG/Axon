@@ -13,7 +13,7 @@ import { Routines } from "./pages/Routines/Routines";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/Axon">
       <Routes>
         <Route path="*" element={<HomePage />} />
         <Route path="/home" element={<HomePage />} />
