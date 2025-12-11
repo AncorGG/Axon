@@ -15,7 +15,7 @@ function App() {
   return (
     <BrowserRouter basename="/Axon">
       <Routes>
-        <Route path="*" element={<HomePage />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/exercise" element={<ExerciseSelector />} />
         <Route path="/exercise/test/:id_exercise" element={<ExerciseTest />} />
