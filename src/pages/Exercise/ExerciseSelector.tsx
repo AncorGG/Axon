@@ -50,7 +50,7 @@ function ExerciseSelector() {
     navigate(`/exercise/test/${exercise.id_exercise}`, { state: { exercise } });
   };
 
-  const handleDeleteRoutine = async (id: number) => {
+  const handleDeleteRoutine = async (_id: number) => {
     try {
       //await RoutineService.deleteRoutine(id);
       fetchRoutines();

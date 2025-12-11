@@ -1,4 +1,3 @@
-import Header from "../../components/displays/header/Header";
 import ExtraDisplay from "../../components/navigation/extra-display/ExtraDisplay";
 import HorizontalNavbar from "../../components/navigation/navbar/HorizontalNavbar";
 import Navbar from "../../components/navigation/navbar/Navbar";
