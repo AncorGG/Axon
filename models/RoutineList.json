@@ -1,0 +1,16 @@
+[
+  {
+    "creation_date": null,
+    "id_user": 1,
+    "description": "Ejercicios de memoria visual para mejorar la capacidad de recordar imágenes y patrones.",
+    "id_routine": 4,
+    "routine_name": "Memoria Visual"
+  },
+  {
+    "creation_date": null,
+    "id_user": 1,
+    "description": "Ejercicios para mejorar la velocidad y precisión en cálculos aritméticos sencillos.",
+    "id_routine": 5,
+    "routine_name": "Aritmética Rápida"
+  }
+]
